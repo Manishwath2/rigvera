@@ -28,7 +28,8 @@
                     colors: { 
                         brand: '#ff0055', // Deep magical pink/red for Mohini Astra feel
                         gold: '#d4af37',  // Premium gold for Rama's Mukut/Dhanush
-                        divineBlue: '#1e3a8a', // Rama's divine skin tone
+                        divineBlue: '#1e3a8a', // (Kept for config, but replaced by grey in SVG)
+                        slateGrey: '#64748b', // Main skin tone
                         darkBg: '#030303' // Deep space void
                     }
                 }
@@ -55,12 +56,12 @@
         
         /* Premium Glow Utilities */
         .glow-gold { filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.8)); }
-        .glow-brand { text-shadow: 0 0 20px rgba(255, 0, 85, 0.9), 0 0 40px rgba(255, 0, 85, 0.6); }
+        .glow-brand { text-shadow: 0 0 15px rgba(255, 0, 85, 0.8), 0 0 30px rgba(255, 0, 85, 0.5); }
         .svg-glow-heart { filter: drop-shadow(0 0 15px #ff0055) drop-shadow(0 0 30px #ff0055); transition: filter 0.5s ease; }
         
         /* Magical Words (Honesty, Trust, etc.) */
         .magical-word {
-            position: absolute; font-family: 'Cinzel', serif; font-weight: 700; letter-spacing: 6px;
+            position: absolute; font-family: 'Cinzel', serif; font-weight: 700; letter-spacing: 4px;
             color: rgba(255, 255, 255, 0.9); text-shadow: 0 0 20px rgba(255, 255, 255, 0.6), 0 0 40px rgba(255, 0, 85, 0.5);
             pointer-events: none; z-index: 15; white-space: nowrap; will-change: transform, opacity;
         }
@@ -68,7 +69,7 @@
         /* The Cinematic Hold Button (Orb) */
         #interact-btn {
             position: absolute; bottom: 4%; left: 50%; transform: translateX(-50%);
-            width: 85px; height: 85px; border-radius: 50%;
+            width: 75px; height: 75px; border-radius: 50%;
             background: radial-gradient(circle, rgba(255,0,85,0.15) 0%, rgba(0,0,0,0) 80%);
             border: 1px solid rgba(255,0,85,0.4);
             display: flex; justify-content: center; align-items: center;
@@ -76,7 +77,7 @@
             box-shadow: 0 0 30px rgba(255,0,85,0.1); animation: pulse-orb 3s infinite ease-in-out;
         }
         #interact-btn::before { 
-            content: 'HOLD'; font-size: 11px; letter-spacing: 5px; color: #ff0055; 
+            content: 'HOLD'; font-size: 10px; letter-spacing: 4px; color: #ff0055; 
             font-weight: 700; font-family: 'Cinzel', serif; opacity: 0.8; transition: opacity 0.3s;
         }
         #interact-btn.charging {
@@ -94,7 +95,7 @@
         /* Charge Progress Bar */
         #charge-bar-container { 
             position: absolute; bottom: 1.5%; left: 50%; transform: translateX(-50%); 
-            width: 220px; height: 3px; background: rgba(255,255,255,0.1); 
+            width: 200px; height: 3px; background: rgba(255,255,255,0.1); 
             border-radius: 3px; z-index: 50; opacity: 0; transition: opacity 0.5s ease; overflow: hidden;
         }
         #charge-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #ff0055, #ffb3c6); box-shadow: 0 0 20px #ff0055; }
@@ -111,14 +112,14 @@
         /* Snap Scrolling for Final Journey */
         .snap-container { display: none; height: 100vh; width: 100vw; overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
         .snap-container::-webkit-scrollbar { display: none; }
-        .snap-page { height: 100vh; width: 100vw; scroll-snap-align: start; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; padding: 2rem; }
+        .snap-page { height: 100vh; width: 100vw; scroll-snap-align: start; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; padding: 1.5rem; }
 
         /* Z-Index Layers Management */
         #layer-interaction { z-index: 20; position: absolute; inset: 0; overflow: hidden; }
         #layer-canvas-fx { z-index: 30; position: absolute; inset: 0; pointer-events: none; }
         /* Celebration Layer: Initially Hidden via CSS opacity */
         #layer-celebration-text { z-index: 35; position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; background: radial-gradient(circle, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.95) 100%); }
-        #layer-terminal { z-index: 40; position: absolute; inset: 0; background: #020202; display: none; padding: 2rem; }
+        #layer-terminal { z-index: 40; position: absolute; inset: 0; background: #020202; display: none; padding: 1.5rem; }
         #layer-pages { z-index: 50; position: absolute; inset: 0; background-color: #030303; }
     </style>
 </head>
@@ -130,50 +131,49 @@
     <div id="layer-interaction">
         
         <!-- Elegant Instruction -->
-        <div id="interaction-hint" class="absolute top-[18%] text-center w-full px-4 text-gray-300 text-xs tracking-[0.4em] uppercase font-light transition-opacity duration-700 font-cinzel">
+        <div id="interaction-hint" class="absolute top-[18%] text-center w-full px-4 text-gray-300 text-[10px] md:text-xs tracking-[0.4em] uppercase font-light transition-opacity duration-700 font-cinzel">
             Touch and Hold to Align The Core<br>
-            <span class="text-[9px] text-gray-500 mt-3 block font-mono tracking-widest">Awaiting 100% Frequency</span>
+            <span class="text-[8px] md:text-[10px] text-gray-500 mt-2 md:mt-3 block font-mono tracking-widest">Awaiting 100% Frequency</span>
         </div>
 
         <!-- ========================================== -->
-        <!-- THE ARCHER (Lord Rama Concept)             -->
+        <!-- THE ARCHER (Grey Tone Men Concept)         -->
         <!-- ========================================== -->
         <!-- Placed at bottom 25%. Fixed constraints taaki teer ko lamba rasta mile. -->
-        <div id="archer-wrapper" class="absolute bottom-[10%] left-1/2 transform -translate-x-1/2 w-[300px] h-[30vh] min-h-[250px] max-h-[320px]">
+        <div id="archer-wrapper" class="absolute bottom-[10%] left-1/2 transform -translate-x-1/2 w-[280px] md:w-[300px] h-[30vh] min-h-[220px] max-h-[320px]">
             
             <!-- Magical Stardust Trail (Follows the arrow up) -->
-            <div id="arrow-trail" class="absolute left-1/2 bottom-[80%] w-2 h-0 bg-gradient-to-t from-transparent via-[#ff0055] to-[#ffffff] opacity-0 blur-[3px]" style="transform: translateX(-50%); z-index: 5;"></div>
+            <div id="arrow-trail" class="absolute left-1/2 bottom-[80%] w-1.5 md:w-2 h-0 bg-gradient-to-t from-transparent via-[#ff0055] to-[#ffffff] opacity-0 blur-[3px]" style="transform: translateX(-50%); z-index: 5;"></div>
 
-            <!-- Detailed SVG Graphic based on Lord Rama aiming UP -->
+            <!-- Detailed SVG Graphic based on Grey Warrior aiming UP -->
             <svg id="archer-svg" viewBox="0 0 400 400" class="w-full h-full overflow-visible relative z-10">
                 <!-- Aura that grows with charge -->
                 <circle id="archer-aura" cx="200" cy="250" r="120" fill="rgba(255,0,85,0)" filter="blur(35px)"/>
                 
-                <!-- Rama Body & Posture -->
+                <!-- Warrior Body & Posture (Grey theme) -->
                 <g id="archer-body">
-                    <!-- Divine Skin Tone (Deep Blue/Dark) -->
-                    <!-- Back Quiver (Tarkash) -->
-                    <path d="M 160 180 L 140 260 L 170 270 L 180 180 Z" fill="#0a0a0a"/>
+                    <!-- Back Quiver (Tarkash) - Dark Slate -->
+                    <path d="M 160 180 L 140 260 L 170 270 L 180 180 Z" fill="#1e293b"/>
                     <!-- Arrows in Quiver -->
                     <line x1="160" y1="180" x2="145" y2="150" stroke="#d4af37" stroke-width="2"/>
                     <line x1="170" y1="180" x2="165" y2="145" stroke="#d4af37" stroke-width="2"/>
                     
                     <!-- Head & Mukut (Crown) -->
-                    <!-- Face -->
-                    <circle cx="200" cy="180" r="16" fill="#0f172a"/>
+                    <!-- Face - Slate Grey -->
+                    <circle cx="200" cy="180" r="16" fill="#64748b"/>
                     <!-- Majestic Mukut (Gold Crown) -->
                     <path d="M 188 170 L 195 130 L 200 120 L 205 130 L 212 170 Z" fill="#d4af37" class="glow-gold"/>
                     <!-- Earring (Kundal) -->
                     <circle cx="190" cy="185" r="3" fill="#d4af37"/>
                     
-                    <!-- Broad Torso (Muscular) -->
-                    <path d="M 180 200 Q 200 190 220 200 L 235 280 Q 200 300 165 280 Z" fill="#0f172a"/>
+                    <!-- Broad Torso (Muscular) - Slate Grey -->
+                    <path d="M 180 200 Q 200 190 220 200 L 235 280 Q 200 300 165 280 Z" fill="#64748b"/>
                     <!-- Golden Sash / Armor Detail -->
                     <path d="M 175 220 L 225 240 L 230 250 L 170 230 Z" fill="#d4af37" opacity="0.8"/>
                     
-                    <!-- Kneeling Legs (Dhoti) -->
-                    <path d="M 195 285 L 260 340 L 310 340" fill="none" stroke="#b45309" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M 165 280 L 110 340 L 60 340" fill="none" stroke="#78350f" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+                    <!-- Kneeling Legs (Dhoti) - Darker Grey/Slate -->
+                    <path d="M 195 285 L 260 340 L 310 340" fill="none" stroke="#475569" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M 165 280 L 110 340 L 60 340" fill="none" stroke="#334155" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
                 </g>
 
                 <!-- The Grand Bow (Held Horizontally, Aiming Up) -->
@@ -183,10 +183,10 @@
                 <path id="bow-string" d="M 54,98 L 200,100 L 346,98" fill="none" stroke="#aaaaaa" stroke-width="2"/>
                 
                 <!-- Archer's Arms -->
-                <!-- Front arm holding the bow UP -->
-                <path id="arm-bow" d="M 225,210 Q 250,150 200,100" fill="none" stroke="#0f172a" stroke-width="14" stroke-linecap="round"/>
-                <!-- Back arm pulling string DOWN -->
-                <path id="arm-pull" d="M 175,210 Q 180,150 200,100" fill="none" stroke="#0a0f1c" stroke-width="12" stroke-linecap="round"/>
+                <!-- Front arm holding the bow UP - Slate Grey -->
+                <path id="arm-bow" d="M 225,210 Q 250,150 200,100" fill="none" stroke="#64748b" stroke-width="14" stroke-linecap="round"/>
+                <!-- Back arm pulling string DOWN - Darker Slate Grey -->
+                <path id="arm-pull" d="M 175,210 Q 180,150 200,100" fill="none" stroke="#475569" stroke-width="12" stroke-linecap="round"/>
                 <!-- Golden Bracelets (Kada) -->
                 <circle cx="215" cy="150" r="7" fill="#d4af37"/>
                 <circle cx="195" cy="160" r="6" fill="#d4af37"/>
@@ -224,11 +224,11 @@
     <!-- LAYER 3: CELEBRATION TEXT (Welcome Khushbu)-->
     <!-- ========================================== -->
     <div id="layer-celebration-text">
-        <h2 class="text-4xl md:text-6xl font-cinzel text-gray-200 font-light tracking-[0.4em] mb-6 opacity-0" id="celeb-text-1">
+        <h2 class="text-2xl md:text-5xl font-cinzel text-gray-200 font-light tracking-[0.4em] mb-4 md:mb-6 opacity-0" id="celeb-text-1">
             Welcome
         </h2>
         <!-- Glow Brand for massive impact -->
-        <h1 class="text-6xl md:text-8xl font-cinzel font-bold text-[#ff0055] glow-brand tracking-widest opacity-0 transform scale-90" id="celeb-text-2">
+        <h1 class="text-4xl md:text-7xl font-cinzel font-bold text-[#ff0055] glow-brand tracking-widest opacity-0 transform scale-90" id="celeb-text-2">
             Khushbu...
         </h1>
     </div>
@@ -236,11 +236,11 @@
     <!-- ========================================== -->
     <!-- LAYER 4: THE HACKER TERMINAL               -->
     <!-- ========================================== -->
-    <div id="layer-terminal" class="crt-overlay flex-col justify-center text-[#00ff41] font-mono text-sm md:text-lg">
-        <div id="term-logs" class="space-y-4 opacity-90 h-[50vh] overflow-hidden flex flex-col justify-end mb-8 pl-6"></div>
-        <div class="mt-4 border-t border-[#00ff41]/50 pt-6 pl-6 flex items-center">
-            <span class="text-white mr-3">root@quantum-core:~#</span> 
-            <span id="term-final-msg" class="text-[#ff0055] font-bold text-xl md:text-3xl drop-shadow-[0_0_10px_#ff0055]"></span>
+    <div id="layer-terminal" class="crt-overlay flex-col justify-center text-[#00ff41] font-mono text-xs md:text-sm">
+        <div id="term-logs" class="space-y-4 opacity-90 h-[50vh] overflow-hidden flex flex-col justify-end mb-6 pl-4 md:pl-6"></div>
+        <div class="mt-4 border-t border-[#00ff41]/50 pt-4 md:pt-6 pl-4 md:pl-6 flex items-center">
+            <span class="text-white mr-2 md:mr-3">root@quantum:~#</span> 
+            <span id="term-final-msg" class="text-[#ff0055] font-bold text-sm md:text-2xl drop-shadow-[0_0_10px_#ff0055]"></span>
             <span class="blinking-cursor"></span>
         </div>
     </div>
@@ -255,29 +255,29 @@
 
         <!-- PAGE 1: The Hook -->
         <section class="snap-page">
-            <div class="text-center z-10 max-w-5xl px-4">
-                <h1 class="text-5xl md:text-7xl lg:text-8xl font-cinzel text-transparent bg-clip-text bg-gradient-to-r from-gray-300 via-white to-gray-500 mb-8 leading-tight drop-shadow-2xl">
+            <div class="text-center z-10 max-w-4xl px-4">
+                <h1 class="text-3xl md:text-5xl lg:text-6xl font-cinzel text-transparent bg-clip-text bg-gradient-to-r from-gray-300 via-white to-gray-500 mb-6 leading-tight drop-shadow-lg">
                     Distance is a myth.<br>Time is relative.
                 </h1>
-                <div class="w-[2px] h-32 bg-gradient-to-b from-[#ff0055] to-transparent mx-auto my-12"></div>
-                <h2 class="text-3xl md:text-5xl lg:text-6xl font-light italic text-[#ff0055] glow-brand leading-relaxed">
+                <div class="w-[2px] h-20 md:h-32 bg-gradient-to-b from-[#ff0055] to-transparent mx-auto my-6 md:my-10"></div>
+                <h2 class="text-xl md:text-3xl lg:text-4xl font-light italic text-[#ff0055] glow-brand leading-relaxed">
                     "But your smile?<br>That’s an unquantifiable constant."
                 </h2>
-                <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce opacity-60">
-                    <span class="text-xs tracking-[0.5em] uppercase mb-4 font-mono text-gray-400">Scroll to Explore</span>
-                    <div class="w-6 h-6 border-b-2 border-r-2 border-[#ff0055] transform rotate-45"></div>
+                <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce opacity-60">
+                    <span class="text-[10px] tracking-[0.4em] uppercase mb-3 font-mono text-gray-400">Scroll to Explore</span>
+                    <div class="w-5 h-5 border-b-2 border-r-2 border-[#ff0055] transform rotate-45"></div>
                 </div>
             </div>
         </section>
 
         <!-- PAGE 2: Phase 1 -->
         <section class="snap-page">
-            <div class="z-10 max-w-6xl w-full flex flex-col md:flex-row items-center gap-10 md:gap-20 px-8 relative">
-                <div class="text-[15rem] md:text-[20rem] font-cinzel font-bold text-white opacity-[0.02] absolute left-0 top-1/2 transform -translate-y-1/2 pointer-events-none">01</div>
-                <div class="w-24 h-24 md:w-32 md:h-32 border-2 border-[#ff0055] rounded-full flex justify-center items-center text-[#ff0055] shadow-[0_0_40px_rgba(255,0,85,0.2)] shrink-0 font-cinzel text-4xl md:text-5xl bg-black/50 backdrop-blur-md z-10">I</div>
-                <div class="z-10 bg-black/50 p-10 rounded-3xl backdrop-blur-lg border border-white/10">
-                    <h3 class="text-5xl md:text-6xl font-cinzel mb-8 text-white tracking-wide text-shadow-lg">Zero Variables</h3>
-                    <p class="text-gray-300 text-2xl md:text-3xl font-light leading-relaxed">
+            <div class="z-10 max-w-5xl w-full flex flex-col md:flex-row items-center gap-6 md:gap-12 px-4 md:px-8 relative">
+                <div class="text-[8rem] md:text-[15rem] font-cinzel font-bold text-white opacity-[0.03] absolute left-0 top-1/2 transform -translate-y-1/2 pointer-events-none">01</div>
+                <div class="w-14 h-14 md:w-20 md:h-20 border-2 border-[#ff0055] rounded-full flex justify-center items-center text-[#ff0055] shadow-[0_0_30px_rgba(255,0,85,0.2)] shrink-0 font-cinzel text-2xl md:text-4xl bg-black/50 backdrop-blur-md z-10">I</div>
+                <div class="z-10 bg-black/50 p-6 md:p-10 rounded-2xl md:rounded-3xl backdrop-blur-lg border border-white/10 text-center md:text-left">
+                    <h3 class="text-2xl md:text-4xl font-cinzel mb-4 md:mb-6 text-white tracking-wide text-shadow-md">Zero Variables</h3>
+                    <p class="text-gray-300 text-base md:text-xl font-light leading-relaxed">
                         Your space, your career, your ambitions. No pressure, no ticking clocks. Just absolute respect for the freedom that makes you, <span class="text-[#ff0055] font-semibold italic">you</span>.
                     </p>
                 </div>
@@ -286,12 +286,12 @@
 
         <!-- PAGE 3: Phase 2 -->
         <section class="snap-page">
-            <div class="z-10 max-w-6xl w-full flex flex-col md:flex-row-reverse items-center gap-10 md:gap-20 px-8 relative">
-                <div class="text-[15rem] md:text-[20rem] font-cinzel font-bold text-white opacity-[0.02] absolute right-0 top-1/2 transform -translate-y-1/2 pointer-events-none">02</div>
-                <div class="w-24 h-24 md:w-32 md:h-32 border-2 border-[#ff0055] rounded-full flex justify-center items-center text-[#ff0055] shadow-[0_0_40px_rgba(255,0,85,0.2)] shrink-0 font-cinzel text-4xl md:text-5xl bg-black/50 backdrop-blur-md z-10">II</div>
-                <div class="z-10 bg-black/50 p-10 rounded-3xl backdrop-blur-lg border border-white/10 md:text-right">
-                    <h3 class="text-5xl md:text-6xl font-cinzel mb-8 text-white tracking-wide text-shadow-lg">The Core Connection</h3>
-                    <p class="text-gray-300 text-2xl md:text-3xl font-light leading-relaxed">
+            <div class="z-10 max-w-5xl w-full flex flex-col md:flex-row-reverse items-center gap-6 md:gap-12 px-4 md:px-8 relative">
+                <div class="text-[8rem] md:text-[15rem] font-cinzel font-bold text-white opacity-[0.03] absolute right-0 top-1/2 transform -translate-y-1/2 pointer-events-none">02</div>
+                <div class="w-14 h-14 md:w-20 md:h-20 border-2 border-[#ff0055] rounded-full flex justify-center items-center text-[#ff0055] shadow-[0_0_30px_rgba(255,0,85,0.2)] shrink-0 font-cinzel text-2xl md:text-4xl bg-black/50 backdrop-blur-md z-10">II</div>
+                <div class="z-10 bg-black/50 p-6 md:p-10 rounded-2xl md:rounded-3xl backdrop-blur-lg border border-white/10 text-center md:text-right">
+                    <h3 class="text-2xl md:text-4xl font-cinzel mb-4 md:mb-6 text-white tracking-wide text-shadow-md">The Core Connection</h3>
+                    <p class="text-gray-300 text-base md:text-xl font-light leading-relaxed">
                         Building a foundation based on absolute truth. No mind games, no guessing. Just 100% transparency and a bond defined by deep, unshakeable trust.
                     </p>
                 </div>
@@ -300,17 +300,17 @@
 
         <!-- PAGE 4: The Climax -->
         <section class="snap-page relative">
-            <div class="text-center z-10 max-w-5xl w-full px-8">
-                <h3 class="text-6xl md:text-8xl font-cinzel mb-10 text-[#ff0055] glow-brand tracking-widest">The Reality</h3>
-                <p class="text-gray-200 text-3xl md:text-4xl font-light leading-relaxed mb-20">
+            <div class="text-center z-10 max-w-4xl w-full px-4 md:px-8">
+                <h3 class="text-3xl md:text-6xl font-cinzel mb-6 md:mb-10 text-[#ff0055] glow-brand tracking-widest">The Reality</h3>
+                <p class="text-gray-200 text-lg md:text-2xl font-light leading-relaxed mb-10 md:mb-16">
                     Standing by your side like a rock. Supporting your vision. Making this entire chaotic universe feel like home.
                 </p>
                 
-                <div class="relative p-16 rounded-[3rem] border border-[#ff0055]/40 bg-[#0a0a0a]/90 backdrop-blur-2xl shadow-[0_0_60px_rgba(255,0,85,0.15)] overflow-hidden group hover:shadow-[0_0_100px_rgba(255,0,85,0.3)] transition-all duration-700 transform hover:-translate-y-3">
+                <div class="relative p-8 md:p-12 rounded-2xl md:rounded-[3rem] border border-[#ff0055]/40 bg-[#0a0a0a]/90 backdrop-blur-2xl shadow-[0_0_40px_rgba(255,0,85,0.15)] overflow-hidden group hover:shadow-[0_0_80px_rgba(255,0,85,0.3)] transition-all duration-700 transform hover:-translate-y-2">
                     <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#ff005520] to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-700"></div>
-                    <p class="font-bold text-white text-4xl md:text-5xl font-cinzel relative z-10 leading-relaxed">
+                    <p class="font-bold text-white text-xl md:text-3xl font-cinzel relative z-10 leading-relaxed">
                         The direct, unchangeable truth is: <br>
-                        <span class="text-[#ff0055] mt-10 block text-6xl md:text-8xl glow-brand tracking-wide">I love you, completely.</span>
+                        <span class="text-[#ff0055] mt-6 md:mt-10 block text-3xl md:text-5xl glow-brand tracking-wide">I love you, completely.</span>
                     </p>
                 </div>
             </div>
@@ -318,14 +318,14 @@
 
         <!-- PAGE 5: The Exit -->
         <section class="snap-page">
-            <div class="text-center z-10 bg-[#050505]/90 p-16 rounded-[3rem] border border-white/10 backdrop-blur-xl">
-                <p class="font-mono text-sm md:text-base text-gray-500 tracking-[0.5em] uppercase mb-16">
+            <div class="text-center z-10 bg-[#050505]/90 p-8 md:p-12 rounded-2xl md:rounded-[3rem] border border-white/10 backdrop-blur-xl mx-4">
+                <p class="font-mono text-[10px] md:text-sm text-gray-500 tracking-[0.4em] md:tracking-[0.5em] uppercase mb-10 md:mb-16">
                     [ Calculating final parameters... ]
                 </p>
                 <div>
-                    <p class="text-gray-300 font-light text-3xl md:text-5xl leading-relaxed">
+                    <p class="text-gray-300 font-light text-lg md:text-3xl leading-relaxed">
                         I’m waiting for you to complete the equation. <br>
-                        <span class="text-[#ff0055] font-bold tracking-[0.4em] uppercase block mt-12 text-xl md:text-2xl glow-brand">Take your time.</span>
+                        <span class="text-[#ff0055] font-bold tracking-[0.3em] uppercase block mt-8 md:mt-12 text-sm md:text-xl glow-brand">Take your time.</span>
                     </p>
                 </div>
             </div>
@@ -414,8 +414,8 @@
             el.innerText = MAGICAL_WORDS[Math.floor(Math.random() * MAGICAL_WORDS.length)];
             
             // Text Size scales with charge
-            const baseSize = window.innerWidth < 768 ? 16 : 24;
-            const size = baseSize + (STATE.charge / 100 * 20);
+            const baseSize = window.innerWidth < 768 ? 12 : 20;
+            const size = baseSize + (STATE.charge / 100 * 15);
             
             el.className = `magical-word`;
             el.style.fontSize = `${size}px`;
@@ -429,8 +429,8 @@
             wordsContainer.appendChild(el);
             
             // Cinematic floating upwards
-            const horizontalDrift = (Math.random() - 0.5) * 250;
-            const verticalTravel = -300 - (STATE.charge * 5); 
+            const horizontalDrift = (Math.random() - 0.5) * 200;
+            const verticalTravel = -250 - (STATE.charge * 5); 
             
             gsap.to(el, {
                 y: verticalTravel,
