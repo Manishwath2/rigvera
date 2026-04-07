@@ -5,12 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>RigVera: The Quantum Connection</title>
 
-    <!-- Fonts: High-end tech & romantic aesthetics -->
+    <!-- ========================================== -->
+    <!-- FONTS: High-end tech & romantic aesthetics -->
+    <!-- ========================================== -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS (CDN for styling) -->
+    <!-- ========================================== -->
+    <!-- TAILWIND CSS (CDN for premium styling)     -->
+    <!-- ========================================== -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -22,234 +26,337 @@
                         cinzel: ['Cinzel', 'serif'],
                     },
                     colors: { 
-                        brand: '#ff0055',
-                        darkBg: '#020202' 
+                        brand: '#ff0055', // Deep romantic red/pink
+                        gold: '#d4af37',  // Premium gold for texts
+                        darkBg: '#050505' // Deep void black
                     }
                 }
             }
         }
     </script>
 
-    <!-- GSAP for Animations -->
+    <!-- ========================================== -->
+    <!-- GSAP for Smooth Cinematic Animations       -->
+    <!-- ========================================== -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
+    <!-- ========================================== -->
+    <!-- CUSTOM PREMIUM CSS                         -->
+    <!-- ========================================== -->
     <style>
         /* Base Resets */
-        * { box-sizing: border-box; user-select: none; -webkit-user-select: none; }
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background-color: #020202; overflow: hidden; color: #fff; font-family: 'Montserrat', sans-serif; touch-action: none; }
+        * { box-sizing: border-box; user-select: none; -webkit-user-select: none; outline: none; -webkit-tap-highlight-color: transparent; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background-color: #050505; overflow: hidden; color: #fff; font-family: 'Montserrat', sans-serif; touch-action: none; }
 
-        /* UI Effects */
-        .glow-text { text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.5); }
-        .glow-red { text-shadow: 0 0 15px #ff0055, 0 0 40px #ff0055; }
-        .svg-glow { filter: drop-shadow(0 0 15px rgba(255,0,85,0.6)); transition: filter 0.1s; }
+        /* Smooth Gradients & Glows */
+        .bg-void { background: radial-gradient(circle at center, #110005 0%, #000000 100%); }
+        .text-glow-gold { text-shadow: 0 0 10px rgba(212, 175, 55, 0.5), 0 0 20px rgba(212, 175, 55, 0.3); }
+        .text-glow-brand { text-shadow: 0 0 15px rgba(255, 0, 85, 0.8), 0 0 30px rgba(255, 0, 85, 0.5); }
+        
+        /* SVG Filters for Heart Arrow */
+        .svg-glow-heart { filter: drop-shadow(0 0 10px #ff0055) drop-shadow(0 0 25px #ff0055); transition: filter 0.3s ease; }
+        .svg-glow-white { filter: drop-shadow(0 0 15px #ffffff); }
 
-        /* Hold Button */
+        /* The Interactive Hold Button (Orb) */
         #interact-btn {
             position: absolute; bottom: 8%; left: 50%; transform: translateX(-50%);
-            width: 80px; height: 80px; border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,0,85,0.2) 0%, rgba(0,0,0,0) 70%);
-            border: 1px solid rgba(255,0,85,0.5);
+            width: 90px; height: 90px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,0,85,0.15) 0%, rgba(0,0,0,0) 70%);
+            border: 1px solid rgba(255,0,85,0.4);
             display: flex; justify-content: center; align-items: center;
-            cursor: pointer; z-index: 50; transition: all 0.3s ease;
-            box-shadow: 0 0 20px rgba(255,0,85,0.2);
-            animation: pulse-ring 2s infinite;
+            cursor: pointer; z-index: 50; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 20px rgba(255,0,85,0.1);
+            animation: pulse-orb 2.5s infinite;
         }
-        #interact-btn::before { content: 'HOLD'; font-size: 11px; letter-spacing: 3px; color: #ff0055; font-weight: bold; font-family: 'Cinzel', serif;}
-        @keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 rgba(255,0,85,0.4); } 70% { box-shadow: 0 0 0 20px rgba(255,0,85,0); } 100% { box-shadow: 0 0 0 0 rgba(255,0,85,0); } }
-
-        /* Charge Bar */
-        #charge-bar-container { position: absolute; bottom: 4%; left: 50%; transform: translateX(-50%); width: 220px; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; z-index: 50; opacity: 0; transition: opacity 0.3s; }
-        #charge-bar { width: 0%; height: 100%; background: #ff0055; border-radius: 2px; box-shadow: 0 0 10px #ff0055; }
-
-        /* Screen Shakes */
-        @keyframes shake-mild { 0% { transform: translate(1px, 1px) rotate(0deg); } 50% { transform: translate(-1px, -1px) rotate(-1deg); } 100% { transform: translate(1px, -1px) rotate(1deg); } }
-        @keyframes shake-hard { 0% { transform: translate(3px, 3px) rotate(0deg); } 50% { transform: translate(-3px, -3px) rotate(-2deg); } 100% { transform: translate(3px, -2px) rotate(2deg); } }
-        .shake-lvl-1 { animation: shake-mild 0.2s infinite; }
-        .shake-lvl-2 { animation: shake-hard 0.1s infinite; }
-
-        /* Layers */
-        #layer-interaction { z-index: 20; position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        #layer-shatter { z-index: 30; position: absolute; inset: 0; pointer-events: none; }
-        #welcome-screen { z-index: 45; position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; background: radial-gradient(circle, rgba(0,0,0,0.4) 0%, rgba(0,0,0,1) 100%); }
-        #layer-terminal { z-index: 40; position: absolute; inset: 0; background: #000; display: none; padding: 2rem; }
+        #interact-btn::before { 
+            content: 'HOLD'; font-size: 11px; letter-spacing: 4px; color: #ff0055; 
+            font-weight: 600; font-family: 'Cinzel', serif; opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        #interact-btn:active, #interact-btn.charging {
+            transform: translateX(-50%) scale(0.9);
+            background: radial-gradient(circle, rgba(255,0,85,0.4) 0%, rgba(0,0,0,0) 80%);
+            border-color: #ff0055;
+            box-shadow: 0 0 40px rgba(255,0,85,0.4);
+            animation: none;
+        }
+        #interact-btn.charging::before { opacity: 1; text-shadow: 0 0 10px #ff0055; }
         
-        #lightning-overlay { position: fixed; inset: 0; background: #ffffff; z-index: 100; opacity: 0; pointer-events: none; }
+        @keyframes pulse-orb { 
+            0% { box-shadow: 0 0 0 0 rgba(255,0,85,0.3); } 
+            70% { box-shadow: 0 0 0 25px rgba(255,0,85,0); } 
+            100% { box-shadow: 0 0 0 0 rgba(255,0,85,0); } 
+        }
 
-        /* Snap Pages */
-        .snap-container { display: none; height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+        /* Charge Progress Bar */
+        #charge-bar-container { 
+            position: absolute; bottom: 3.5%; left: 50%; transform: translateX(-50%); 
+            width: 250px; height: 2px; background: rgba(255,255,255,0.1); 
+            border-radius: 2px; z-index: 50; opacity: 0; transition: opacity 0.4s ease; 
+            overflow: hidden;
+        }
+        #charge-bar { 
+            width: 0%; height: 100%; background: linear-gradient(90deg, #ff0055, #ff4d88); 
+            box-shadow: 0 0 15px #ff0055; transition: width 0.05s linear;
+        }
+
+        /* Floating Words (Honesty, Trust, etc.) */
+        .magical-word {
+            position: absolute;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            letter-spacing: 6px;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 0, 85, 0.4);
+            pointer-events: none;
+            z-index: 15;
+            white-space: nowrap;
+            will-change: transform, opacity;
+        }
+
+        /* Hacker Terminal CRT Effect */
+        .crt-overlay::before {
+            content: " "; display: block; position: absolute; top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 2; background-size: 100% 2px, 3px 100%; pointer-events: none;
+        }
+        .blinking-cursor::after { content: '█'; animation: blink 1s step-start infinite; color: #00ff41; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Snap Scrolling Pages (Phase 4) */
+        .snap-container { 
+            display: none; height: 100vh; width: 100vw; overflow-y: scroll; 
+            scroll-snap-type: y mandatory; scroll-behavior: smooth; 
+        }
         .snap-container::-webkit-scrollbar { display: none; }
-        .snap-page { height: 100vh; width: 100vw; scroll-snap-align: start; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; padding: 2rem; }
+        .snap-page { 
+            height: 100vh; width: 100vw; scroll-snap-align: start; 
+            display: flex; flex-direction: column; justify-content: center; 
+            align-items: center; position: relative; padding: 2rem; 
+        }
+
+        /* Layer Management */
+        #layer-interaction { z-index: 20; position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        #layer-canvas-fx { z-index: 30; position: absolute; inset: 0; pointer-events: none; } /* For Sparks & Celebration */
+        #layer-celebration-text { z-index: 35; position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; background: radial-gradient(circle, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.9) 100%); }
+        #layer-terminal { z-index: 40; position: absolute; inset: 0; background: #030303; display: none; padding: 2rem; }
+        #layer-pages { z-index: 50; position: absolute; inset: 0; background-color: #050505; }
+        
+        /* Utility */
+        .hide { display: none !important; }
     </style>
 </head>
-<body id="main-body">
+<body id="main-body" class="bg-void">
 
-    <!-- Lightning Overlay -->
-    <div id="lightning-overlay"></div>
-
-    <!-- Celebration / Welcome Text Screen -->
-    <div id="welcome-screen">
-        <h1 class="text-4xl md:text-6xl font-cinzel font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-400 text-center glow-text leading-snug">
-            Welcome<br><span class="text-[#ff0055] text-5xl md:text-7xl glow-red mt-4 block tracking-wide">Khushbu...</span>
-        </h1>
-    </div>
-
-    <!-- LAYER 1: Interactive Archer Phase -->
+    <!-- ========================================== -->
+    <!-- LAYER 1: INTERACTIVE ARCHER & SUMMONING    -->
+    <!-- ========================================== -->
     <div id="layer-interaction">
-        <!-- Hint -->
-        <div id="interaction-hint" class="absolute top-1/4 text-center w-full px-4 text-gray-400 text-sm tracking-[0.2em] uppercase font-light transition-opacity duration-500">
-            Hold to Summon Energy<br>
-            <span class="text-[10px] text-gray-600 mt-2 block">Requires 100% Focus</span>
+        
+        <!-- Elegant Hint Text -->
+        <div id="interaction-hint" class="absolute top-[15%] text-center w-full px-4 text-gray-400 text-xs md:text-sm tracking-[0.3em] uppercase font-light transition-opacity duration-700 font-cinzel">
+            Touch and Hold to Align The Frequencies<br>
+            <span class="text-[9px] text-gray-600 mt-3 block font-mono tracking-widest">Awaiting 100% Core Connection</span>
         </div>
 
-        <!-- Archer Container -->
-        <div id="archer-wrapper" class="relative w-[320px] h-[450px] mt-10">
-            <!-- Arrow Trail -->
-            <div id="arrow-trail" class="absolute left-1/2 bottom-[45%] w-1.5 h-0 bg-gradient-to-t from-transparent via-[#ff0055] to-white opacity-0 blur-[2px]" style="transform: translateX(-50%); z-index: 5;"></div>
+        <!-- The Archer Container -->
+        <div id="archer-wrapper" class="relative w-[350px] h-[500px] mt-12">
+            
+            <!-- Stardust Trail for Arrow (Hidden initially) -->
+            <div id="arrow-trail" class="absolute left-[49.5%] bottom-[45%] w-2 h-0 bg-gradient-to-t from-transparent via-[#ff0055] to-[#ffffff] opacity-0 blur-[3px]" style="transform: translateX(-50%); z-index: 5;"></div>
 
+            <!-- SVG Graphic -->
             <svg id="archer-svg" viewBox="0 0 400 500" class="w-full h-full overflow-visible relative z-10">
-                <circle id="archer-aura" cx="200" cy="300" r="80" fill="rgba(255,0,85,0)" filter="blur(20px)"/>
+                <!-- Glowing Aura -->
+                <circle id="archer-aura" cx="200" cy="320" r="120" fill="rgba(255,0,85,0)" filter="blur(35px)"/>
                 
-                <!-- Strong Male Warrior Silhouette -->
-                <g id="archer-body" fill="#151515">
-                    <!-- Head & Bun -->
-                    <circle cx="200" cy="180" r="15" fill="#222"/>
-                    <ellipse cx="185" cy="175" rx="8" ry="12" fill="#222" transform="rotate(-30 185 175)"/>
-                    <!-- Broad Torso -->
-                    <path d="M 175 195 L 225 195 L 235 280 L 195 290 L 165 280 Z" fill="#1a1a1a"/>
-                    <!-- Front Leg (Kneeling) -->
-                    <path d="M 195 285 L 245 330 L 265 330" fill="none" stroke="#1a1a1a" stroke-width="16" stroke-linecap="round"/>
-                    <!-- Back Leg -->
-                    <path d="M 175 280 L 130 330 L 110 330" fill="none" stroke="#151515" stroke-width="16" stroke-linecap="round"/>
+                <!-- Organic, Masculine Archer Silhouette -->
+                <g id="archer-body" fill="#111111">
+                    <!-- Head & Tied Hair -->
+                    <circle cx="200" cy="180" r="16" fill="#1a1a1a"/>
+                    <path d="M 188 175 Q 170 190 175 160 Q 185 170 190 175" fill="#1a1a1a"/>
+                    <!-- Broad Shoulders & Torso (Kneeling Pose) -->
+                    <path d="M 170 195 Q 200 190 230 195 L 245 280 Q 200 295 160 280 Z" fill="#151515"/>
+                    <!-- Forward Kneeling Leg -->
+                    <path d="M 195 285 L 250 340 L 280 340" fill="none" stroke="#151515" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+                    <!-- Backward Leg -->
+                    <path d="M 165 280 L 120 340 L 90 340" fill="none" stroke="#111111" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
                 </g>
 
-                <!-- Dynamic Bow & String -->
-                <path id="bow-wood" d="M 100,50 Q 200,-20 300,50" fill="none" stroke="#333" stroke-width="6" stroke-linecap="round"/>
-                <path id="bow-string" d="M 102,48 Q 200,50 298,48" fill="none" stroke="#666" stroke-width="1.5"/>
+                <!-- The Grand Bow -->
+                <!-- Wood -->
+                <path id="bow-wood" d="M 100,50 Q 200,-30 300,50" fill="none" stroke="#2a2a2a" stroke-width="7" stroke-linecap="round"/>
+                <!-- String -->
+                <path id="bow-string" d="M 102,48 Q 200,50 298,48" fill="none" stroke="#555" stroke-width="1.5"/>
                 
-                <!-- Arms -->
-                <path id="arm-bow" d="M 220,200 L 200,100" fill="none" stroke="#111" stroke-width="12" stroke-linecap="round"/>
-                <path id="arm-pull" d="M 180,200 L 200,50" fill="none" stroke="#1c1c1c" stroke-width="10" stroke-linecap="round"/>
+                <!-- Archer's Arms -->
+                <!-- Front arm holding bow -->
+                <path id="arm-bow" d="M 230,200 Q 220,150 200,100" fill="none" stroke="#111" stroke-width="14" stroke-linecap="round"/>
+                <!-- Back arm pulling string -->
+                <path id="arm-pull" d="M 170,200 Q 190,120 200,50" fill="none" stroke="#181818" stroke-width="12" stroke-linecap="round"/>
 
-                <!-- The Arrow -->
+                <!-- ========================================== -->
+                <!-- THE HEART-TIPPED MAGICAL ARROW             -->
+                <!-- ========================================== -->
                 <g id="the-arrow">
-                    <line id="arrow-shaft" x1="200" y1="50" x2="200" y2="-60" stroke="#555" stroke-width="3" />
-                    <polygon id="arrow-tip" points="192,-40 200,-70 208,-40" fill="#555" />
-                    <path id="arrow-fletch" d="M 196,40 L 186,60 L 196,50 Z M 204,40 L 214,60 L 204,50 Z" fill="#555"/>
+                    <!-- Arrow Shaft -->
+                    <line id="arrow-shaft" x1="200" y1="50" x2="200" y2="-50" stroke="#444" stroke-width="3" />
+                    <!-- The Heart Tip (Stylized geometric heart) -->
+                    <path id="arrow-tip" d="M 200,-50 C 190,-60 185,-40 200,-35 C 215,-40 210,-60 200,-50 Z" fill="#444" transform="scale(1.2) translate(-33, 15)"/>
+                    <!-- Fletching (Feathers at the back) -->
+                    <path id="arrow-fletch" d="M 195,40 L 180,65 L 195,55 Z M 205,40 L 220,65 L 205,55 Z" fill="#444"/>
                 </g>
             </svg>
 
-            <!-- Spawning Words Container -->
-            <div id="words-container" class="absolute inset-0 pointer-events-none overflow-visible z-20"></div>
+            <!-- Container for spawning "Honesty, Trust" words dynamically -->
+            <div id="words-container" class="absolute inset-0 pointer-events-none z-20 overflow-visible"></div>
         </div>
 
-        <!-- Hold Controls -->
+        <!-- Interactive Hold Controls -->
         <div id="interact-btn"></div>
         <div id="charge-bar-container">
             <div id="charge-bar"></div>
         </div>
     </div>
 
-    <!-- LAYER 2: Celebration Shatter Canvas -->
-    <canvas id="layer-shatter"></canvas>
+    <!-- ========================================== -->
+    <!-- LAYER 2: HIGH-FIDELITY CANVAS PHYSICS      -->
+    <!-- ========================================== -->
+    <canvas id="layer-canvas-fx"></canvas>
 
-    <!-- LAYER 3: Terminal Sequence -->
+    <!-- ========================================== -->
+    <!-- LAYER 3: CELEBRATION TEXT (Welcome Khushbu)-->
+    <!-- ========================================== -->
+    <div id="layer-celebration-text">
+        <h2 class="text-3xl md:text-4xl font-cinzel text-gray-300 font-light tracking-widest mb-4 opacity-0" id="celeb-text-1">
+            Welcome
+        </h2>
+        <h1 class="text-5xl md:text-7xl font-cinzel font-bold text-[#ff0055] text-glow-brand tracking-wide opacity-0 transform scale-90" id="celeb-text-2">
+            Khushbu...
+        </h1>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- LAYER 4: HACKER TERMINAL BOOT SEQUENCE     -->
+    <!-- ========================================== -->
     <div id="layer-terminal" class="crt-overlay flex-col justify-center text-[#00ff41] font-mono text-sm md:text-lg">
         <div id="term-logs" class="space-y-3 opacity-80 h-[60vh] overflow-hidden flex flex-col justify-end mb-8"></div>
-        <div class="mt-4 border-t border-[#00ff41] pt-4">
-            <span class="text-white">root@quantum:~#</span> <span id="term-final-msg" class="text-[#ff0055] font-bold text-xl md:text-3xl"></span><span class="blinking-cursor"></span>
+        <div class="mt-4 border-t border-[#00ff41] pt-4 flex items-center">
+            <span class="text-white mr-2">root@quantum-core:~#</span> 
+            <span id="term-final-msg" class="text-[#ff0055] font-bold text-xl md:text-2xl drop-shadow-[0_0_5px_#ff0055]"></span>
+            <span class="blinking-cursor"></span>
         </div>
     </div>
 
-    <!-- LAYER 4: Final Snap Pages -->
-    <div id="layer-pages" class="snap-container bg-gradient-to-b from-[#0a0003] to-[#000000]">
-        <!-- Background Ambient Glow -->
-        <div class="fixed inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#ff005510] via-transparent to-transparent opacity-50"></div>
+    <!-- ========================================== -->
+    <!-- LAYER 5: FINAL SNAP-SCROLLING PAGES        -->
+    <!-- ========================================== -->
+    <div id="layer-pages" class="snap-container">
+        
+        <!-- Ambient Background for Pages -->
+        <div class="fixed inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#ff005510] via-[#050505] to-[#000000] opacity-80"></div>
 
-        <!-- Page 1 -->
+        <!-- Page 1: Hero / Hook -->
         <section class="snap-page">
-            <div class="text-center z-10 max-w-3xl">
-                <h1 class="text-3xl md:text-6xl font-cinzel text-transparent bg-clip-text bg-gradient-to-r from-gray-200 via-white to-gray-400 mb-6 leading-relaxed">
+            <div class="text-center z-10 max-w-4xl px-4">
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-cinzel text-transparent bg-clip-text bg-gradient-to-r from-gray-200 via-white to-gray-500 mb-8 leading-tight">
                     Distance is a myth.<br>Time is relative.
                 </h1>
-                <div class="w-[1px] h-20 bg-gradient-to-b from-[#ff0055] to-transparent mx-auto my-8"></div>
-                <h2 class="text-xl md:text-4xl font-light italic text-[#ff0055] drop-shadow-[0_0_15px_rgba(255,0,85,0.4)]">
+                <div class="w-[1px] h-24 bg-gradient-to-b from-[#ff0055] to-transparent mx-auto my-10"></div>
+                <h2 class="text-2xl md:text-4xl lg:text-5xl font-light italic text-[#ff0055] text-glow-brand leading-relaxed">
                     "But your smile?<br>That’s an unquantifiable constant."
                 </h2>
-                <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce opacity-50">
-                    <span class="text-xs tracking-[0.3em] uppercase mb-2">Swipe Up</span>
-                    <div class="w-4 h-4 border-b-2 border-r-2 border-white transform rotate-45"></div>
+                <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce opacity-60">
+                    <span class="text-[10px] tracking-[0.4em] uppercase mb-3 font-mono text-gray-400">Scroll Down</span>
+                    <div class="w-4 h-4 border-b-2 border-r-2 border-[#ff0055] transform rotate-45"></div>
                 </div>
             </div>
         </section>
 
-        <!-- Page 2 -->
+        <!-- Page 2: Phase 1 -->
         <section class="snap-page">
-            <div class="z-10 max-w-4xl w-full flex flex-col md:flex-row items-center gap-10">
-                <div class="text-[8rem] md:text-[12rem] font-cinzel font-bold text-white opacity-5 absolute left-0 md:left-10 top-1/4 pointer-events-none">01</div>
-                <div class="w-16 h-16 border border-[#ff0055] rounded-full flex justify-center items-center text-[#ff0055] shadow-[0_0_20px_rgba(255,0,85,0.3)] shrink-0 font-cinzel text-2xl">I</div>
+            <div class="z-10 max-w-5xl w-full flex flex-col md:flex-row items-center gap-8 md:gap-16 px-6">
+                <div class="text-[10rem] md:text-[15rem] font-cinzel font-bold text-white opacity-[0.03] absolute left-0 md:left-10 top-1/4 pointer-events-none">01</div>
+                <div class="w-20 h-20 border border-[#ff0055] rounded-full flex justify-center items-center text-[#ff0055] shadow-[0_0_25px_rgba(255,0,85,0.2)] shrink-0 font-cinzel text-3xl">I</div>
                 <div>
-                    <h3 class="text-3xl md:text-5xl font-cinzel mb-4 text-white">Zero Variables</h3>
-                    <p class="text-gray-400 text-lg md:text-xl font-light leading-relaxed">
+                    <h3 class="text-4xl md:text-5xl font-cinzel mb-6 text-white tracking-wide">Zero Variables</h3>
+                    <p class="text-gray-400 text-xl md:text-2xl font-light leading-relaxed">
                         Your space, your career, your ambitions. No pressure, no ticking clocks. Just absolute respect for the freedom that makes you, <span class="text-white font-medium italic">you</span>.
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- Page 3 -->
+        <!-- Page 3: Phase 2 -->
         <section class="snap-page">
-            <div class="z-10 max-w-4xl w-full flex flex-col md:flex-row items-center gap-10">
-                <div class="text-[8rem] md:text-[12rem] font-cinzel font-bold text-white opacity-5 absolute right-0 md:right-10 top-1/4 pointer-events-none">02</div>
-                <div class="w-16 h-16 border border-[#ff0055] rounded-full flex justify-center items-center text-[#ff0055] shadow-[0_0_20px_rgba(255,0,85,0.3)] shrink-0 font-cinzel text-2xl">II</div>
+            <div class="z-10 max-w-5xl w-full flex flex-col md:flex-row items-center gap-8 md:gap-16 px-6">
+                <div class="text-[10rem] md:text-[15rem] font-cinzel font-bold text-white opacity-[0.03] absolute right-0 md:right-10 top-1/4 pointer-events-none">02</div>
+                <div class="w-20 h-20 border border-[#ff0055] rounded-full flex justify-center items-center text-[#ff0055] shadow-[0_0_25px_rgba(255,0,85,0.2)] shrink-0 font-cinzel text-3xl">II</div>
                 <div>
-                    <h3 class="text-3xl md:text-5xl font-cinzel mb-4 text-white">The Core Connection</h3>
-                    <p class="text-gray-400 text-lg md:text-xl font-light leading-relaxed">
+                    <h3 class="text-4xl md:text-5xl font-cinzel mb-6 text-white tracking-wide">The Core Connection</h3>
+                    <p class="text-gray-400 text-xl md:text-2xl font-light leading-relaxed">
                         Building a foundation based on absolute truth. No mind games, no guessing. Just 100% transparency and a bond defined by deep, unshakeable trust.
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- Page 4 -->
-        <section class="snap-page">
-            <div class="text-center z-10 max-w-4xl w-full px-4">
-                <h3 class="text-4xl md:text-6xl font-cinzel mb-8 text-[#ff0055] drop-shadow-[0_0_15px_rgba(255,0,85,0.5)]">The Reality</h3>
-                <p class="text-gray-200 text-xl md:text-2xl font-light leading-relaxed mb-12">
+        <!-- Page 4: Phase 3 & Climax -->
+        <section class="snap-page relative">
+            <div class="text-center z-10 max-w-4xl w-full px-6">
+                <h3 class="text-5xl md:text-7xl font-cinzel mb-10 text-[#ff0055] text-glow-brand">The Reality</h3>
+                <p class="text-gray-300 text-2xl md:text-3xl font-light leading-relaxed mb-16">
                     Standing by your side like a rock. Supporting your vision. Making this entire chaotic universe feel like home.
                 </p>
-                <div class="p-8 border border-gray-800 bg-[#111111]/80 backdrop-blur-md rounded-xl shadow-2xl relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#ff005515] to-transparent opacity-50"></div>
-                    <p class="font-bold text-white text-2xl md:text-3xl font-cinzel relative z-10">
-                        The direct, unchangeable truth is: <br><span class="text-[#ff0055] mt-4 block text-4xl md:text-5xl">I love you, completely.</span>
+                
+                <div class="relative p-10 rounded-2xl border border-gray-800 bg-[#0a0a0a]/80 backdrop-blur-lg shadow-2xl overflow-hidden group hover:border-[#ff0055]/50 transition-colors duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#ff005510] to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <p class="font-bold text-white text-2xl md:text-4xl font-cinzel relative z-10 leading-relaxed">
+                        The direct, unchangeable truth is: <br>
+                        <span class="text-[#ff0055] mt-6 block text-5xl md:text-6xl text-glow-brand tracking-wide">I love you, completely.</span>
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- Page 5 -->
+        <!-- Page 5: The Respectful Exit -->
         <section class="snap-page">
             <div class="text-center z-10">
-                <p class="font-mono text-sm text-gray-500 tracking-widest uppercase mb-8">
+                <p class="font-mono text-xs md:text-sm text-gray-500 tracking-[0.3em] uppercase mb-10">
                     [ Calculating final parameters... ]
                 </p>
-                <p class="text-gray-300 font-light text-xl md:text-2xl leading-relaxed">
-                    I’m waiting for you to complete the equation. <br>
-                    <span class="text-[#ff0055] font-semibold tracking-[0.2em] uppercase block mt-6 text-sm">Take your time.</span>
-                </p>
+                <div class="inline-block">
+                    <p class="text-gray-300 font-light text-2xl md:text-3xl leading-relaxed">
+                        I’m waiting for you to complete the equation. <br>
+                        <span class="text-[#ff0055] font-semibold tracking-[0.2em] uppercase block mt-8 text-base">Take your time.</span>
+                    </p>
+                </div>
             </div>
         </section>
     </div>
 
     <!-- ========================================== -->
-    <!-- JAVASCRIPT LOGIC                           -->
+    <!-- CORE ENGINEERING & JAVASCRIPT LOGIC        -->
     <!-- ========================================== -->
     <script>
-        // DOM Elements
+        /**
+         * RIGVERA: QUANTUM EMOTIONAL ENGINE
+         * Modules: 
+         * 1. State Machine & UI Handlers
+         * 2. Advanced SVG Manipulator (Bow Physics)
+         * 3. Majestic Word Emitter
+         * 4. High-Fidelity Canvas Particle System (Sparks, Hearts, Shockwaves)
+         * 5. Cinematic GSAP Timelines
+         */
+
+        // --- 1. DOM Elements & State ---
         const btn = document.getElementById('interact-btn');
         const chargeBar = document.getElementById('charge-bar');
         const chargeContainer = document.getElementById('charge-bar-container');
         const hint = document.getElementById('interaction-hint');
-        const body = document.getElementById('main-body');
+        const wordsContainer = document.getElementById('words-container');
         
         // SVG
         const bowWood = document.getElementById('bow-wood');
@@ -261,268 +368,380 @@
         const arrowFletch = document.getElementById('arrow-fletch');
         const archerAura = document.getElementById('archer-aura');
 
-        let state = {
-            phase: 'interaction',
-            charge: 0,
-            isCharging: false,
-            wordInterval: null
+        const STATE = {
+            phase: 'idle', // idle -> charging -> flight -> impact -> terminal -> pages
+            charge: 0,     // 0 to 100
+            wordTimer: null
         };
 
-        // --- THE VALUES (Floating Words) ---
-        function spawnWords() {
-            if(!state.isCharging) return;
-            const words = ['HONESTY', 'TRUST', 'RESPECT', 'AUTHENTICITY', 'LOVE'];
-            const container = document.getElementById('words-container');
+        const MAGICAL_WORDS = [
+            "HONESTY", "TRUST", "RESPECT", "AUTHENTICITY", "LOVE", 
+            "CLARITY", "DEVOTION", "PATIENCE", "TRUTH"
+        ];
+
+        // --- 2. Advanced Visual Feedback (No Shakes, Only Elegance) ---
+        function updateArcherPhysics(chargePercent) {
+            const tension = chargePercent / 100; // 0.0 to 1.0
+            
+            // 2.1 Smooth Bow Bending
+            const woodControlY = -30 + (tension * -80); 
+            bowWood.setAttribute('d', `M 100,50 Q 200,${woodControlY} 300,50`);
+
+            // 2.2 String & Arrow Pulling
+            const pullDistance = tension * 110; // Max pull pixels
+            const stringY = 50 + pullDistance;
+            
+            bowString.setAttribute('d', `M 102,48 Q 200,${stringY} 298,48`);
+            armPull.setAttribute('d', `M 170,200 Q 190,120 200,${stringY}`);
+            gsap.set(arrow, { y: pullDistance });
+
+            // 2.3 The "Heart Arrow" Glow Transition
+            // As tension increases, arrow goes from dull grey to deep glowing red
+            const isCharged = tension > 0.4;
+            const isFullyCharged = tension > 0.8;
+            
+            arrowShaft.setAttribute('stroke', isCharged ? '#ff0055' : '#444');
+            arrowTip.setAttribute('fill', isCharged ? '#ff0055' : '#444');
+            arrowFletch.setAttribute('fill', isCharged ? '#ff0055' : '#444');
+            
+            if(isFullyCharged) {
+                arrow.classList.add('svg-glow-heart');
+                archerAura.setAttribute('fill', `rgba(255,0,85,${tension * 0.25})`);
+            } else {
+                arrow.classList.remove('svg-glow-heart');
+                archerAura.setAttribute('fill', `rgba(255,0,85,0)`);
+            }
+        }
+
+        // --- 3. Majestic Word Emitter (Floating Values) ---
+        function spawnMagicalWord() {
+            if(STATE.phase !== 'charging') return;
+
             const el = document.createElement('div');
+            el.innerText = MAGICAL_WORDS[Math.floor(Math.random() * MAGICAL_WORDS.length)];
             
-            el.innerText = words[Math.floor(Math.random() * words.length)];
+            // Dynamic Size based on charge level
+            const baseSize = window.innerWidth < 768 ? 12 : 16;
+            const size = baseSize + (STATE.charge / 100 * 15);
             
-            // Dynamic Size and Glow based on Charge
-            const size = 10 + (state.charge / 100 * 18);
-            el.className = `absolute font-cinzel font-bold pointer-events-none drop-shadow-[0_0_10px_#ff0055] tracking-widest text-center w-full`;
-            el.style.color = state.charge > 70 ? '#ff0055' : '#aaaaaa';
+            el.className = `magical-word`;
             el.style.fontSize = `${size}px`;
-            el.style.left = `${(Math.random() - 0.5) * 50}%`; // Spread horizontally
-            el.style.bottom = `20%`;
             
-            container.appendChild(el);
+            // Color shifts from soft white to brand red
+            el.style.color = STATE.charge > 75 ? '#ff4d88' : '#ffffff';
             
-            // Floating Up Animation
+            // Spawn around the archer (bottom center)
+            const startX = 35 + Math.random() * 30; // 35% to 65% width
+            el.style.left = `${startX}%`;
+            el.style.bottom = `15%`;
+            
+            wordsContainer.appendChild(el);
+            
+            // Elegant GSAP floating animation (Sine wave drift)
+            const horizontalDrift = (Math.random() - 0.5) * 150;
+            const verticalTravel = -200 - (STATE.charge * 3); // Travels higher if charged more
+            
             gsap.to(el, {
-                y: -150 - (state.charge * 2.5), 
-                x: (Math.random() - 0.5) * 100,
+                y: verticalTravel,
+                x: horizontalDrift,
                 opacity: 0,
-                scale: 1.5,
-                duration: 1.5 + Math.random(),
-                ease: "power2.out",
+                scale: 1.2,
+                duration: 2.5 + Math.random() * 1.5,
+                ease: "power1.out",
                 onComplete: () => el.remove()
             });
         }
 
-        // --- CHARGE MECHANICS ---
-        function updateArcherVisuals(chargePercent) {
-            const tension = chargePercent / 100;
-            
-            // Bow bending
-            const woodControlY = -20 + (tension * -70); 
-            bowWood.setAttribute('d', `M 100,50 Q 200,${woodControlY} 300,50`);
-
-            // String & Arrow Pulling
-            const pullDistance = tension * 100; 
-            const stringY = 50 + pullDistance;
-            
-            bowString.setAttribute('d', `M 102,48 Q 200,${stringY} 298,48`);
-            armPull.setAttribute('d', `M 180,200 L 200,${stringY}`);
-            gsap.set(arrow, { y: pullDistance });
-
-            // Color Transition to Red
-            arrowShaft.setAttribute('stroke', tension > 0.5 ? '#ff0055' : '#555');
-            arrowTip.setAttribute('fill', tension > 0.5 ? '#ff0055' : '#555');
-            arrowFletch.setAttribute('fill', tension > 0.5 ? '#ff0055' : '#555');
-            
-            if(tension > 0.8) arrow.classList.add('svg-glow');
-            else arrow.classList.remove('svg-glow');
-
-            archerAura.setAttribute('fill', `rgba(255,0,85,${tension * 0.2})`);
-
-            // Camera Shake
-            if(tension > 0.8) body.className = 'shake-lvl-2';
-            else if (tension > 0.4) body.className = 'shake-lvl-1';
-            else body.className = '';
-        }
-
+        // --- 4. Core Interaction Loop ---
         function chargeLoop() {
-            if(!state.isCharging) return;
-            state.charge += 0.7; // Speed of charge
+            if(STATE.phase !== 'charging') return;
             
-            if(state.charge >= 100) {
-                state.charge = 100;
-                executeStrike(); 
+            STATE.charge += 0.6; // Charging speed multiplier
+            
+            if(STATE.charge >= 100) {
+                STATE.charge = 100;
+                executeReleaseSequence(); // Trigger majestic flight
             }
-            chargeBar.style.width = `${state.charge}%`;
-            updateArcherVisuals(state.charge);
+            
+            chargeBar.style.width = `${STATE.charge}%`;
+            updateArcherPhysics(STATE.charge);
         }
 
-        function startCharge(e) {
-            if (e) e.preventDefault();
-            if (state.phase !== 'interaction') return;
+        function handlePointerDown(e) {
+            if (e && e.type === 'touchstart') e.preventDefault();
+            if (STATE.phase !== 'idle') return;
             
-            state.isCharging = true;
+            STATE.phase = 'charging';
+            
+            // UI Updates
             chargeContainer.style.opacity = 1;
             hint.style.opacity = 0;
-            btn.style.transform = 'translateX(-50%) scale(0.9)';
-            btn.style.background = 'rgba(255,0,85,0.4)';
+            btn.classList.add('charging');
 
-            state.wordInterval = setInterval(spawnWords, 300); // Spawn values
+            // Start Emitter & Physics Loop
+            STATE.wordTimer = setInterval(spawnMagicalWord, 350); // Spawn word every 350ms
             gsap.ticker.add(chargeLoop);
         }
 
-        function stopCharge(e) {
-            if (e) e.preventDefault();
-            if (state.phase !== 'interaction' || !state.isCharging) return;
+        function handlePointerUp(e) {
+            if (e && e.type === 'touchend') e.preventDefault();
+            if (STATE.phase !== 'charging') return;
             
-            state.isCharging = false;
+            // Stop logic
+            STATE.phase = 'idle';
             gsap.ticker.remove(chargeLoop);
-            clearInterval(state.wordInterval);
+            clearInterval(STATE.wordTimer);
             
-            btn.style.transform = 'translateX(-50%) scale(1)';
-            btn.style.background = 'radial-gradient(circle, rgba(255,0,85,0.2) 0%, rgba(0,0,0,0) 70%)';
-            body.className = ''; 
+            // UI Revert
+            btn.classList.remove('charging');
 
-            if(state.charge < 100) {
-                gsap.to(state, {
+            // If failed to reach 100%, snap back gracefully
+            if(STATE.charge < 100) {
+                gsap.to(STATE, {
                     charge: 0,
-                    duration: 0.5,
-                    ease: "elastic.out(1, 0.3)",
+                    duration: 0.6,
+                    ease: "elastic.out(1, 0.4)",
                     onUpdate: () => {
-                        chargeBar.style.width = `${state.charge}%`;
-                        updateArcherVisuals(state.charge);
+                        chargeBar.style.width = `${STATE.charge}%`;
+                        updateArcherPhysics(STATE.charge);
                     },
                     onComplete: () => {
                         chargeContainer.style.opacity = 0;
-                        hint.innerHTML = "Do not break the connection. Hold.";
+                        hint.innerHTML = "Patience is key. Hold until 100%.";
                         hint.style.opacity = 1;
                     }
                 });
             }
         }
 
-        btn.addEventListener('mousedown', startCharge);
-        btn.addEventListener('touchstart', startCharge, {passive: false});
-        window.addEventListener('mouseup', stopCharge);
-        window.addEventListener('touchend', stopCharge);
+        // Event Listeners
+        btn.addEventListener('mousedown', handlePointerDown);
+        btn.addEventListener('touchstart', handlePointerDown, {passive: false});
+        window.addEventListener('mouseup', handlePointerUp);
+        window.addEventListener('touchend', handlePointerUp);
 
-        // --- THE RELEASE & CELEBRATION ---
-        function executeStrike() {
-            state.phase = 'strike';
-            state.isCharging = false;
+
+        // --- 5. The Cinematic Release & Majestic Flight ---
+        function executeReleaseSequence() {
+            STATE.phase = 'flight';
             gsap.ticker.remove(chargeLoop);
-            clearInterval(state.wordInterval);
-            body.className = ''; 
+            clearInterval(STATE.wordTimer);
 
-            // Hide UI
-            gsap.to([btn, chargeContainer, hint], {opacity: 0, duration: 0.2});
+            // Hide Input UI immediately
+            gsap.to([btn, chargeContainer, hint], {opacity: 0, duration: 0.3, pointerEvents: 'none'});
 
             const tl = gsap.timeline();
 
-            // 1. Lightning
-            tl.to(document.getElementById('lightning-overlay'), {opacity: 1, duration: 0.05, yoyo: true, repeat: 3});
+            // 5.1 Slow, Majestic Arrow Flight
+            // Arrow travels 1500px up over 1.8 seconds. Starts slow, accelerates beautifully.
+            tl.to(arrow, { y: -1500, duration: 1.8, ease: "power2.in" }, "shoot");
             
-            // 2. SLOW MAJESTIC SHOOT
-            // Duration increased to 1.2s so arrow is clearly visible traveling up
-            tl.to(arrow, { y: -1200, duration: 1.2, ease: "power2.in" }, "shoot");
-            tl.to('#arrow-trail', { opacity: 1, height: "150%", y: -1000, duration: 1.2, ease: "power2.in" }, "shoot");
+            // Stardust Trail follows the arrow
+            tl.to('#arrow-trail', { opacity: 1, height: "200%", y: -1200, duration: 1.8, ease: "power2.in" }, "shoot");
             
-            // Bow Snap
-            tl.to(bowString, { attr: { d: "M 102,48 Q 200,50 298,48" }, duration: 0.1, ease: "back.out(4)" }, "shoot");
-            tl.to(bowWood, { attr: { d: "M 100,50 Q 200,-20 300,50" }, duration: 0.1, ease: "back.out(4)" }, "shoot");
+            // Bow snaps back organically
+            tl.to(bowString, { attr: { d: "M 102,48 Q 200,50 298,48" }, duration: 0.15, ease: "back.out(3)" }, "shoot");
+            tl.to(bowWood, { attr: { d: "M 100,50 Q 200,-30 300,50" }, duration: 0.15, ease: "back.out(3)" }, "shoot");
+            tl.to(armPull, { attr: { d: "M 170,200 Q 190,120 200,50" }, duration: 0.15, ease: "back.out(3)" }, "shoot");
 
-            // 3. IMPACT -> CELEBRATION & WELCOME TEXT
+            // 5.2 The Impact Moment (Precisely when arrow hits top of screen)
             tl.add(() => {
-                gsap.to("body", { y:()=>(Math.random()-0.5)*30, duration:0.02, yoyo:true, repeat:15 }); // Shake
-                initCelebrationPhysics(); // Explode fireworks/shatter
+                STATE.phase = 'impact';
+                ParticleEngine.triggerMegaExplosion(); // Launch high-fidelity canvas particles
                 
-                // Show "Welcome Khushbu..."
-                gsap.to('#welcome-screen', {opacity: 1, duration: 1.5});
-            }, "shoot+=1.2");
+                // Show Welcome Text Sequentially
+                const celebTL = gsap.timeline();
+                celebTL.to('#celeb-text-1', {opacity: 1, y: -20, duration: 1, ease: "power2.out"})
+                       .to('#celeb-text-2', {opacity: 1, scale: 1, duration: 1.5, ease: "elastic.out(1, 0.5)"}, "-=0.5");
+            }, "shoot+=1.8");
 
-            // Hide Archer
-            tl.to(document.getElementById('layer-interaction'), {opacity: 0, duration: 0.5}, "shoot+=1.2");
-            
-            // Wait for 3 seconds of celebration, then fade out welcome screen
-            tl.to('#welcome-screen', {opacity: 0, duration: 1.5}, "shoot+=4.2");
-            
-            // 4. Start Terminal
-            tl.add(startTerminalSequence, "shoot+=5.7");
+            // Fade out the archer svg smoothly after shoot
+            tl.to(document.getElementById('layer-interaction'), {opacity: 0, duration: 0.8}, "shoot+=1.8");
+
+            // 5.3 Transition to Terminal
+            // Wait 4 seconds enjoying the celebration, then fade to terminal
+            tl.to(document.getElementById('layer-celebration-text'), {opacity: 0, duration: 1}, "shoot+=5.5");
+            tl.add(startHackerTerminal, "shoot+=6.5");
         }
 
-        // --- Celebration Particle Physics (Canvas) ---
-        const canvas = document.getElementById('layer-shatter');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
 
-        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        // --- 6. High-Fidelity Canvas Particle Engine (The Celebration) ---
+        const canvas = document.getElementById('layer-canvas-fx');
+        const ctx = canvas.getContext('2d');
+        let dpr = window.devicePixelRatio || 1;
+        
+        function resizeCanvas() { 
+            canvas.width = window.innerWidth * dpr; 
+            canvas.height = window.innerHeight * dpr;
+            ctx.scale(dpr, dpr);
+        }
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        function initCelebrationPhysics() {
-            canvas.style.display = 'block';
-            // Brighter colors for celebration
-            const colors = ['#ffffff', '#ff0055', '#ff88aa', '#ffb3c6'];
-            for(let i = 0; i < 400; i++) {
-                particles.push({
-                    x: canvas.width / 2,
-                    y: canvas.height * 0.1, // Explode from top
-                    vx: (Math.random() - 0.5) * 60, 
-                    vy: (Math.random() - 0.2) * 50,    
-                    size: Math.random() * 4 + 1,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    life: 1,
-                    decay: Math.random() * 0.01 + 0.005,
-                });
-            }
-            animateCelebration();
-        }
+        const ParticleEngine = {
+            particles: [],
+            isActive: false,
 
-        function animateCelebration() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            let isAlive = false;
-            
-            particles.forEach(p => {
-                p.x += p.vx;
-                p.y += p.vy;
-                p.vy += 0.4; // Gravity falling down
-                p.life -= p.decay;
+            // A helper to draw a perfect tiny heart on canvas
+            drawHeart: function(ctx, x, y, size, color, alpha) {
+                ctx.save();
+                ctx.globalAlpha = alpha;
+                ctx.fillStyle = color;
+                ctx.translate(x, y);
+                // Simple bezier heart path
+                ctx.beginPath();
+                ctx.moveTo(0, size/4);
+                ctx.bezierCurveTo(0, 0, -size/2, 0, -size/2, size/4);
+                ctx.bezierCurveTo(-size/2, size/2, 0, size*0.8, 0, size);
+                ctx.bezierCurveTo(0, size*0.8, size/2, size/2, size/2, size/4);
+                ctx.bezierCurveTo(size/2, 0, 0, 0, 0, size/4);
+                ctx.fill();
+                ctx.restore();
+            },
+
+            triggerMegaExplosion: function() {
+                this.isActive = true;
+                this.particles = [];
                 
-                if (p.life > 0) {
-                    isAlive = true;
-                    ctx.globalAlpha = p.life;
-                    ctx.fillStyle = p.color;
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                    ctx.fill();
+                const centerX = window.innerWidth / 2;
+                const topY = window.innerHeight * 0.15; // Explodes near the top
+
+                const colors = ['#ffffff', '#ff0055', '#ff4d88', '#ffb3c6', '#d4af37'];
+
+                // Generate 300 High-Quality Particles
+                for(let i = 0; i < 300; i++) {
+                    const angle = Math.random() * Math.PI * 2;
+                    // Distribute velocities to create a spherical explosion effect
+                    const velocity = Math.random() * 25 + 5; 
+                    const isHeart = Math.random() > 0.8; // 20% particles are tiny hearts
+
+                    this.particles.push({
+                        x: centerX,
+                        y: topY,
+                        vx: Math.cos(angle) * velocity,
+                        vy: Math.sin(angle) * velocity + (Math.random() * -10), // slight upward bias
+                        size: isHeart ? Math.random() * 15 + 10 : Math.random() * 4 + 1.5,
+                        color: colors[Math.floor(Math.random() * colors.length)],
+                        life: 1.0,
+                        decay: Math.random() * 0.01 + 0.005, // How fast they fade
+                        gravity: 0.3, // Falling effect
+                        friction: 0.96, // Air resistance
+                        isHeart: isHeart,
+                        rotation: Math.random() * 360,
+                        rotSpeed: (Math.random() - 0.5) * 5
+                    });
                 }
-            });
+                
+                this.render();
+            },
 
-            if (isAlive) requestAnimationFrame(animateCelebration);
-            else canvas.style.display = 'none';
-        }
+            render: function() {
+                if(!this.isActive) return;
+                
+                // Clear frame
+                ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+                
+                let aliveCount = 0;
 
-        // --- Terminal Sequence ---
-        const fakeLogs = [
-            "Initiating Quantum Core...",
+                this.particles.forEach(p => {
+                    if (p.life <= 0) return;
+                    aliveCount++;
+
+                    // Physics Updates
+                    p.vx *= p.friction;
+                    p.vy *= p.friction;
+                    p.vy += p.gravity;
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.life -= p.decay;
+                    p.rotation += p.rotSpeed;
+
+                    if (p.life > 0) {
+                        if (p.isHeart) {
+                            this.drawHeart(ctx, p.x, p.y, p.size, p.color, Math.max(0, p.life));
+                        } else {
+                            ctx.save();
+                            ctx.globalAlpha = Math.max(0, p.life);
+                            ctx.fillStyle = p.color;
+                            ctx.beginPath();
+                            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                            
+                            // Add glow to normal particles
+                            ctx.shadowBlur = 10;
+                            ctx.shadowColor = p.color;
+                            ctx.fill();
+                            ctx.restore();
+                        }
+                    }
+                });
+
+                if (aliveCount > 0) {
+                    requestAnimationFrame(() => this.render());
+                } else {
+                    this.isActive = false;
+                    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+                }
+            }
+        };
+
+
+        // --- 7. Hacker Terminal Boot Sequence ---
+        const TERMINAL_LOGS = [
+            "Initializing RigVera Quantum Protocol...",
+            "Bypassing standard logic gates.......... [OK]",
             "Decrypting emotional variables.......... [SUCCESS]",
-            "Establishing permanent connection....... [DONE]",
-            "Welcome, Khushbu."
+            "Establishing zero-variable foundation... [DONE]",
+            "Isolating primary directive...",
+            "Target Acquired: KHUSHBU."
         ];
 
-        async function startTerminalSequence() {
+        async function startHackerTerminal() {
+            STATE.phase = 'terminal';
             const layerTerm = document.getElementById('layer-terminal');
             layerTerm.style.display = 'flex';
+            
             const logsContainer = document.getElementById('term-logs');
             const finalMsg = document.getElementById('term-final-msg');
 
-            for(let i=0; i<fakeLogs.length; i++) {
+            // Simulate realistic typing / loading logs
+            for(let i = 0; i < TERMINAL_LOGS.length; i++) {
                 const logEl = document.createElement('div');
-                logEl.innerText = `> ${fakeLogs[i]}`;
+                logEl.innerText = `> ${TERMINAL_LOGS[i]}`;
                 logsContainer.appendChild(logEl);
-                await new Promise(r => setTimeout(r, Math.random() * 200 + 150));
+                // Auto-scroll
+                logsContainer.scrollTop = logsContainer.scrollHeight;
+                // Random delay for authenticity (150ms to 450ms)
+                await new Promise(r => setTimeout(r, Math.random() * 300 + 150));
             }
-            await new Promise(r => setTimeout(r, 500));
 
-            const msg = "Loading The Reality...";
-            for(let i=0; i<msg.length; i++) {
+            await new Promise(r => setTimeout(r, 600)); // Pause for suspense
+
+            // Type the final message
+            const msg = "Loading The Reality Engine...";
+            for(let i = 0; i < msg.length; i++) {
                 finalMsg.innerHTML += msg.charAt(i);
-                await new Promise(r => setTimeout(r, 50));
+                await new Promise(r => setTimeout(r, 40)); // Typing speed
             }
 
-            await new Promise(r => setTimeout(r, 1000));
+            await new Promise(r => setTimeout(r, 1200)); // Read time
+            
+            // Fade Out Terminal, Trigger Final Pages
             gsap.to(layerTerm, { opacity: 0, duration: 1, onComplete: () => {
                 layerTerm.style.display = 'none';
-                document.getElementById('layer-pages').style.display = 'block';
-                gsap.from(document.getElementById('layer-pages'), { opacity: 0, duration: 1.5 });
+                initFinalSnapPages();
             }});
         }
+
+        // --- 8. Final Snap Pages (The Roadmap) ---
+        function initFinalSnapPages() {
+            STATE.phase = 'pages';
+            const pagesLayer = document.getElementById('layer-pages');
+            pagesLayer.style.display = 'block';
+            
+            // Smooth fade in of the entire pages container
+            gsap.from(pagesLayer, { opacity: 0, duration: 1.5, ease: "power2.out" });
+        }
+
     </script>
 </body>
 </html>
