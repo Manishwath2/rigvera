@@ -6,14 +6,14 @@
     <title>RigVera: The Epic Connection</title>
 
     <!-- ========================================== -->
-    <!-- PRE-FETCH FONTS FOR PREMIUM TYPOGRAPHY     -->
+    <!-- FONTS: Premium typography load karein      -->
     <!-- ========================================== -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- ========================================== -->
-    <!-- TAILWIND CSS CONFIGURATION                 -->
+    <!-- TAILWIND CSS: Styling ke liye              -->
     <!-- ========================================== -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -26,9 +26,10 @@
                         cinzel: ['Cinzel', 'serif'],
                     },
                     colors: { 
-                        brand: '#ff0055', // Deep magical pink/red
-                        gold: '#d4af37',  // Premium ancient gold
-                        darkBg: '#030303' // True deep void
+                        brand: '#ff0055', // Deep magical pink/red for Mohini Astra feel
+                        gold: '#d4af37',  // Premium gold for Rama's Mukut/Dhanush
+                        divineBlue: '#1e3a8a', // Rama's divine skin tone
+                        darkBg: '#030303' // Deep space void
                     }
                 }
             }
@@ -36,67 +37,67 @@
     </script>
 
     <!-- ========================================== -->
-    <!-- ANIMATION ENGINES (GSAP & ScrollTrigger)   -->
+    <!-- GSAP LIBRARIES: Smooth animations ke liye  -->
     <!-- ========================================== -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <!-- ========================================== -->
-    <!-- PREMIUM STYLESHEET                         -->
+    <!-- CUSTOM STYLESHEET                          -->
     <!-- ========================================== -->
     <style>
-        /* Base Resets & Global Styles */
+        /* Base Setup */
         *, *::before, *::after { box-sizing: border-box; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; background-color: #030303; overflow: hidden; color: #ffffff; font-family: 'Montserrat', sans-serif; touch-action: none; }
 
-        /* The Deep Space Background */
+        /* Deep Space Background */
         .bg-cosmos { background: radial-gradient(circle at 50% 100%, #1a000a 0%, #030303 70%); }
         
-        /* Advanced Glow Utilities */
-        .glow-gold { text-shadow: 0 0 15px rgba(212, 175, 55, 0.6), 0 0 30px rgba(212, 175, 55, 0.3); }
+        /* Premium Glow Utilities */
+        .glow-gold { filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.8)); }
         .glow-brand { text-shadow: 0 0 20px rgba(255, 0, 85, 0.9), 0 0 40px rgba(255, 0, 85, 0.6); }
-        .svg-glow-heart { filter: drop-shadow(0 0 12px #ff0055) drop-shadow(0 0 25px #ff0055); transition: filter 0.5s ease; }
+        .svg-glow-heart { filter: drop-shadow(0 0 15px #ff0055) drop-shadow(0 0 30px #ff0055); transition: filter 0.5s ease; }
         
-        /* Magical Words Emitter */
+        /* Magical Words (Honesty, Trust, etc.) */
         .magical-word {
-            position: absolute; font-family: 'Cinzel', serif; font-weight: 600; letter-spacing: 5px;
-            color: rgba(255, 255, 255, 0.8); text-shadow: 0 0 15px rgba(255, 255, 255, 0.5), 0 0 30px rgba(255, 0, 85, 0.4);
+            position: absolute; font-family: 'Cinzel', serif; font-weight: 700; letter-spacing: 6px;
+            color: rgba(255, 255, 255, 0.9); text-shadow: 0 0 20px rgba(255, 255, 255, 0.6), 0 0 40px rgba(255, 0, 85, 0.5);
             pointer-events: none; z-index: 15; white-space: nowrap; will-change: transform, opacity;
         }
 
-        /* The Cinematic Hold Button */
+        /* The Cinematic Hold Button (Orb) */
         #interact-btn {
-            position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%);
-            width: 80px; height: 80px; border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,0,85,0.1) 0%, rgba(0,0,0,0) 80%);
-            border: 1px solid rgba(255,0,85,0.3);
+            position: absolute; bottom: 4%; left: 50%; transform: translateX(-50%);
+            width: 85px; height: 85px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,0,85,0.15) 0%, rgba(0,0,0,0) 80%);
+            border: 1px solid rgba(255,0,85,0.4);
             display: flex; justify-content: center; align-items: center;
             cursor: pointer; z-index: 50; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 0 30px rgba(255,0,85,0.05); animation: pulse-orb 3s infinite ease-in-out;
+            box-shadow: 0 0 30px rgba(255,0,85,0.1); animation: pulse-orb 3s infinite ease-in-out;
         }
         #interact-btn::before { 
-            content: 'HOLD'; font-size: 10px; letter-spacing: 5px; color: #ff0055; 
-            font-weight: 600; font-family: 'Cinzel', serif; opacity: 0.7; transition: opacity 0.3s;
+            content: 'HOLD'; font-size: 11px; letter-spacing: 5px; color: #ff0055; 
+            font-weight: 700; font-family: 'Cinzel', serif; opacity: 0.8; transition: opacity 0.3s;
         }
         #interact-btn.charging {
-            transform: translateX(-50%) scale(0.9); background: radial-gradient(circle, rgba(255,0,85,0.3) 0%, rgba(0,0,0,0) 80%);
-            border-color: #ff0055; box-shadow: 0 0 50px rgba(255,0,85,0.5); animation: none;
+            transform: translateX(-50%) scale(0.85); background: radial-gradient(circle, rgba(255,0,85,0.4) 0%, rgba(0,0,0,0) 80%);
+            border-color: #ff0055; box-shadow: 0 0 60px rgba(255,0,85,0.6); animation: none;
         }
         #interact-btn.charging::before { opacity: 1; text-shadow: 0 0 15px #ff0055; }
         
         @keyframes pulse-orb { 
-            0% { box-shadow: 0 0 0 0 rgba(255,0,85,0.2); } 
-            70% { box-shadow: 0 0 0 30px rgba(255,0,85,0); } 
+            0% { box-shadow: 0 0 0 0 rgba(255,0,85,0.3); } 
+            70% { box-shadow: 0 0 0 35px rgba(255,0,85,0); } 
             100% { box-shadow: 0 0 0 0 rgba(255,0,85,0); } 
         }
 
-        /* Progress Bar */
+        /* Charge Progress Bar */
         #charge-bar-container { 
-            position: absolute; bottom: 2%; left: 50%; transform: translateX(-50%); 
-            width: 200px; height: 2px; background: rgba(255,255,255,0.05); 
-            border-radius: 2px; z-index: 50; opacity: 0; transition: opacity 0.5s ease; overflow: hidden;
+            position: absolute; bottom: 1.5%; left: 50%; transform: translateX(-50%); 
+            width: 220px; height: 3px; background: rgba(255,255,255,0.1); 
+            border-radius: 3px; z-index: 50; opacity: 0; transition: opacity 0.5s ease; overflow: hidden;
         }
-        #charge-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #ff0055, #ff88aa); box-shadow: 0 0 15px #ff0055; }
+        #charge-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #ff0055, #ffb3c6); box-shadow: 0 0 20px #ff0055; }
 
         /* Hacker Terminal CRT & Glitch */
         .crt-overlay::before {
@@ -115,7 +116,8 @@
         /* Z-Index Layers Management */
         #layer-interaction { z-index: 20; position: absolute; inset: 0; overflow: hidden; }
         #layer-canvas-fx { z-index: 30; position: absolute; inset: 0; pointer-events: none; }
-        #layer-celebration-text { z-index: 35; position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; background: radial-gradient(circle, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.95) 100%); }
+        /* Celebration Layer: Initially Hidden via CSS opacity */
+        #layer-celebration-text { z-index: 35; position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; background: radial-gradient(circle, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.95) 100%); }
         #layer-terminal { z-index: 40; position: absolute; inset: 0; background: #020202; display: none; padding: 2rem; }
         #layer-pages { z-index: 50; position: absolute; inset: 0; background-color: #030303; }
     </style>
@@ -128,62 +130,81 @@
     <div id="layer-interaction">
         
         <!-- Elegant Instruction -->
-        <div id="interaction-hint" class="absolute top-[20%] text-center w-full px-4 text-gray-400 text-xs tracking-[0.4em] uppercase font-light transition-opacity duration-700 font-cinzel">
+        <div id="interaction-hint" class="absolute top-[18%] text-center w-full px-4 text-gray-300 text-xs tracking-[0.4em] uppercase font-light transition-opacity duration-700 font-cinzel">
             Touch and Hold to Align The Core<br>
-            <span class="text-[9px] text-gray-600 mt-3 block font-mono tracking-widest">Awaiting 100% Frequency</span>
+            <span class="text-[9px] text-gray-500 mt-3 block font-mono tracking-widest">Awaiting 100% Frequency</span>
         </div>
 
         <!-- ========================================== -->
-        <!-- THE ARCHER (Restricted to Bottom 25%)      -->
+        <!-- THE ARCHER (Lord Rama Concept)             -->
         <!-- ========================================== -->
-        <!-- Placed at bottom. Max-height ensures it never covers the flight path -->
-        <div id="archer-wrapper" class="absolute bottom-[12%] left-1/2 transform -translate-x-1/2 w-[250px] h-[25vh] min-h-[200px] max-h-[280px]">
+        <!-- Placed at bottom 25%. Fixed constraints taaki teer ko lamba rasta mile. -->
+        <div id="archer-wrapper" class="absolute bottom-[10%] left-1/2 transform -translate-x-1/2 w-[300px] h-[30vh] min-h-[250px] max-h-[320px]">
             
             <!-- Magical Stardust Trail (Follows the arrow up) -->
-            <div id="arrow-trail" class="absolute left-1/2 bottom-[80%] w-1.5 h-0 bg-gradient-to-t from-transparent via-[#ff0055] to-[#ffffff] opacity-0 blur-[2px]" style="transform: translateX(-50%); z-index: 5;"></div>
+            <div id="arrow-trail" class="absolute left-1/2 bottom-[80%] w-2 h-0 bg-gradient-to-t from-transparent via-[#ff0055] to-[#ffffff] opacity-0 blur-[3px]" style="transform: translateX(-50%); z-index: 5;"></div>
 
-            <!-- SVG Graphic based on the Kneeling Ram Pose aiming UP -->
+            <!-- Detailed SVG Graphic based on Lord Rama aiming UP -->
             <svg id="archer-svg" viewBox="0 0 400 400" class="w-full h-full overflow-visible relative z-10">
                 <!-- Aura that grows with charge -->
-                <circle id="archer-aura" cx="200" cy="250" r="100" fill="rgba(255,0,85,0)" filter="blur(30px)"/>
+                <circle id="archer-aura" cx="200" cy="250" r="120" fill="rgba(255,0,85,0)" filter="blur(35px)"/>
                 
-                <!-- Organic Ancient Warrior Silhouette (Kneeling, looking up) -->
-                <g id="archer-body" fill="#111111">
-                    <!-- Head & Mukut (Crown/Hair) angled upwards -->
-                    <circle cx="200" cy="180" r="18" fill="#1a1a1a"/>
-                    <!-- Hair bun/crown -->
-                    <path d="M 185 170 Q 200 140 215 170 Z" fill="#1a1a1a"/>
-                    <!-- Torso -->
-                    <path d="M 175 200 Q 200 195 225 200 L 235 280 Q 200 300 165 280 Z" fill="#151515"/>
-                    <!-- Kneeling Legs -->
-                    <path d="M 195 285 L 260 340 L 300 340" fill="none" stroke="#151515" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M 165 280 L 110 340 L 70 340" fill="none" stroke="#111111" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- Rama Body & Posture -->
+                <g id="archer-body">
+                    <!-- Divine Skin Tone (Deep Blue/Dark) -->
+                    <!-- Back Quiver (Tarkash) -->
+                    <path d="M 160 180 L 140 260 L 170 270 L 180 180 Z" fill="#0a0a0a"/>
+                    <!-- Arrows in Quiver -->
+                    <line x1="160" y1="180" x2="145" y2="150" stroke="#d4af37" stroke-width="2"/>
+                    <line x1="170" y1="180" x2="165" y2="145" stroke="#d4af37" stroke-width="2"/>
+                    
+                    <!-- Head & Mukut (Crown) -->
+                    <!-- Face -->
+                    <circle cx="200" cy="180" r="16" fill="#0f172a"/>
+                    <!-- Majestic Mukut (Gold Crown) -->
+                    <path d="M 188 170 L 195 130 L 200 120 L 205 130 L 212 170 Z" fill="#d4af37" class="glow-gold"/>
+                    <!-- Earring (Kundal) -->
+                    <circle cx="190" cy="185" r="3" fill="#d4af37"/>
+                    
+                    <!-- Broad Torso (Muscular) -->
+                    <path d="M 180 200 Q 200 190 220 200 L 235 280 Q 200 300 165 280 Z" fill="#0f172a"/>
+                    <!-- Golden Sash / Armor Detail -->
+                    <path d="M 175 220 L 225 240 L 230 250 L 170 230 Z" fill="#d4af37" opacity="0.8"/>
+                    
+                    <!-- Kneeling Legs (Dhoti) -->
+                    <path d="M 195 285 L 260 340 L 310 340" fill="none" stroke="#b45309" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M 165 280 L 110 340 L 60 340" fill="none" stroke="#78350f" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
                 </g>
 
                 <!-- The Grand Bow (Held Horizontally, Aiming Up) -->
                 <!-- Base state of bow wood -->
-                <path id="bow-wood" d="M 50,100 Q 200,60 350,100" fill="none" stroke="#d4af37" stroke-width="8" stroke-linecap="round"/>
+                <path id="bow-wood" d="M 50,100 Q 200,60 350,100" fill="none" stroke="#d4af37" stroke-width="8" stroke-linecap="round" class="glow-gold"/>
                 <!-- Base state of bow string -->
-                <path id="bow-string" d="M 52,98 L 200,100 L 348,98" fill="none" stroke="#666" stroke-width="2"/>
+                <path id="bow-string" d="M 54,98 L 200,100 L 346,98" fill="none" stroke="#aaaaaa" stroke-width="2"/>
                 
-                <!-- Archer's Arms holding the bow above head -->
-                <path id="arm-bow" d="M 230,210 Q 250,150 200,100" fill="none" stroke="#151515" stroke-width="14" stroke-linecap="round"/>
-                <path id="arm-pull" d="M 170,210 Q 180,150 200,100" fill="none" stroke="#111111" stroke-width="12" stroke-linecap="round"/>
+                <!-- Archer's Arms -->
+                <!-- Front arm holding the bow UP -->
+                <path id="arm-bow" d="M 225,210 Q 250,150 200,100" fill="none" stroke="#0f172a" stroke-width="14" stroke-linecap="round"/>
+                <!-- Back arm pulling string DOWN -->
+                <path id="arm-pull" d="M 175,210 Q 180,150 200,100" fill="none" stroke="#0a0f1c" stroke-width="12" stroke-linecap="round"/>
+                <!-- Golden Bracelets (Kada) -->
+                <circle cx="215" cy="150" r="7" fill="#d4af37"/>
+                <circle cx="195" cy="160" r="6" fill="#d4af37"/>
 
                 <!-- ========================================== -->
                 <!-- THE HEART-TIPPED ARROW (Pointing Up)       -->
                 <!-- ========================================== -->
                 <g id="the-arrow">
                     <!-- Shaft -->
-                    <line id="arrow-shaft" x1="200" y1="100" x2="200" y2="-20" stroke="#444" stroke-width="4" />
+                    <line id="arrow-shaft" x1="200" y1="100" x2="200" y2="-20" stroke="#777" stroke-width="4" />
                     <!-- Fletching (Feathers at bottom) -->
-                    <path id="arrow-fletch" d="M 194,80 L 180,110 L 194,95 Z M 206,80 L 220,110 L 206,95 Z" fill="#444"/>
-                    <!-- The Heart Tip (At y=-20) -->
-                    <path id="arrow-tip" d="M 200,-25 C 185,-40 175,-15 200,0 C 225,-15 215,-40 200,-25 Z" fill="#444" transform="scale(0.8) translate(50, -5)"/>
+                    <path id="arrow-fletch" d="M 192,80 L 175,110 L 192,95 Z M 208,80 L 225,110 L 208,95 Z" fill="#777"/>
+                    <!-- The Heart Tip (Perfect symmetric heart geometry) -->
+                    <path id="arrow-tip" d="M 200,-15 C 180,-35 165,-5 200,15 C 235,-5 220,-35 200,-15 Z" fill="#777" transform="scale(0.8) translate(50, -5)"/>
                 </g>
             </svg>
 
-            <!-- Container for spawning "Honesty, Trust" words -->
+            <!-- Container for spawning "Honesty, Trust" words dynamically -->
             <div id="words-container" class="absolute inset-0 pointer-events-none z-20 overflow-visible"></div>
         </div>
 
@@ -203,10 +224,11 @@
     <!-- LAYER 3: CELEBRATION TEXT (Welcome Khushbu)-->
     <!-- ========================================== -->
     <div id="layer-celebration-text">
-        <h2 class="text-3xl md:text-5xl font-cinzel text-gray-300 font-light tracking-[0.3em] mb-4 opacity-0" id="celeb-text-1">
+        <h2 class="text-4xl md:text-6xl font-cinzel text-gray-200 font-light tracking-[0.4em] mb-6 opacity-0" id="celeb-text-1">
             Welcome
         </h2>
-        <h1 class="text-5xl md:text-8xl font-cinzel font-bold text-[#ff0055] glow-brand tracking-wide opacity-0 transform scale-90" id="celeb-text-2">
+        <!-- Glow Brand for massive impact -->
+        <h1 class="text-6xl md:text-8xl font-cinzel font-bold text-[#ff0055] glow-brand tracking-widest opacity-0 transform scale-90" id="celeb-text-2">
             Khushbu...
         </h1>
     </div>
@@ -214,11 +236,11 @@
     <!-- ========================================== -->
     <!-- LAYER 4: THE HACKER TERMINAL               -->
     <!-- ========================================== -->
-    <div id="layer-terminal" class="crt-overlay flex-col justify-center text-[#00ff41] font-mono text-xs md:text-lg">
-        <div id="term-logs" class="space-y-3 opacity-80 h-[50vh] overflow-hidden flex flex-col justify-end mb-8 pl-4"></div>
-        <div class="mt-4 border-t border-[#00ff41]/50 pt-4 pl-4 flex items-center">
-            <span class="text-white mr-2">root@quantum-core:~#</span> 
-            <span id="term-final-msg" class="text-[#ff0055] font-bold text-lg md:text-2xl drop-shadow-[0_0_8px_#ff0055]"></span>
+    <div id="layer-terminal" class="crt-overlay flex-col justify-center text-[#00ff41] font-mono text-sm md:text-lg">
+        <div id="term-logs" class="space-y-4 opacity-90 h-[50vh] overflow-hidden flex flex-col justify-end mb-8 pl-6"></div>
+        <div class="mt-4 border-t border-[#00ff41]/50 pt-6 pl-6 flex items-center">
+            <span class="text-white mr-3">root@quantum-core:~#</span> 
+            <span id="term-final-msg" class="text-[#ff0055] font-bold text-xl md:text-3xl drop-shadow-[0_0_10px_#ff0055]"></span>
             <span class="blinking-cursor"></span>
         </div>
     </div>
@@ -233,29 +255,29 @@
 
         <!-- PAGE 1: The Hook -->
         <section class="snap-page">
-            <div class="text-center z-10 max-w-4xl px-4">
-                <h1 class="text-4xl md:text-6xl lg:text-7xl font-cinzel text-transparent bg-clip-text bg-gradient-to-r from-gray-300 via-white to-gray-500 mb-8 leading-tight drop-shadow-2xl">
+            <div class="text-center z-10 max-w-5xl px-4">
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-cinzel text-transparent bg-clip-text bg-gradient-to-r from-gray-300 via-white to-gray-500 mb-8 leading-tight drop-shadow-2xl">
                     Distance is a myth.<br>Time is relative.
                 </h1>
-                <div class="w-[1px] h-24 bg-gradient-to-b from-[#ff0055] to-transparent mx-auto my-10"></div>
-                <h2 class="text-2xl md:text-4xl lg:text-5xl font-light italic text-[#ff0055] glow-brand leading-relaxed">
+                <div class="w-[2px] h-32 bg-gradient-to-b from-[#ff0055] to-transparent mx-auto my-12"></div>
+                <h2 class="text-3xl md:text-5xl lg:text-6xl font-light italic text-[#ff0055] glow-brand leading-relaxed">
                     "But your smile?<br>That’s an unquantifiable constant."
                 </h2>
-                <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce opacity-50">
-                    <span class="text-[10px] tracking-[0.5em] uppercase mb-4 font-mono text-gray-400">Scroll to Explore</span>
-                    <div class="w-5 h-5 border-b-2 border-r-2 border-[#ff0055] transform rotate-45"></div>
+                <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce opacity-60">
+                    <span class="text-xs tracking-[0.5em] uppercase mb-4 font-mono text-gray-400">Scroll to Explore</span>
+                    <div class="w-6 h-6 border-b-2 border-r-2 border-[#ff0055] transform rotate-45"></div>
                 </div>
             </div>
         </section>
 
         <!-- PAGE 2: Phase 1 -->
         <section class="snap-page">
-            <div class="z-10 max-w-5xl w-full flex flex-col md:flex-row items-center gap-8 md:gap-16 px-6 relative">
-                <div class="text-[12rem] md:text-[18rem] font-cinzel font-bold text-white opacity-[0.02] absolute left-0 top-1/2 transform -translate-y-1/2 pointer-events-none">01</div>
-                <div class="w-20 h-20 md:w-24 md:h-24 border border-[#ff0055] rounded-full flex justify-center items-center text-[#ff0055] shadow-[0_0_30px_rgba(255,0,85,0.2)] shrink-0 font-cinzel text-3xl md:text-4xl bg-black/50 backdrop-blur-sm z-10">I</div>
-                <div class="z-10 bg-black/40 p-8 rounded-2xl backdrop-blur-md border border-white/5">
-                    <h3 class="text-4xl md:text-5xl font-cinzel mb-6 text-white tracking-wide glow-text">Zero Variables</h3>
-                    <p class="text-gray-300 text-xl md:text-2xl font-light leading-relaxed">
+            <div class="z-10 max-w-6xl w-full flex flex-col md:flex-row items-center gap-10 md:gap-20 px-8 relative">
+                <div class="text-[15rem] md:text-[20rem] font-cinzel font-bold text-white opacity-[0.02] absolute left-0 top-1/2 transform -translate-y-1/2 pointer-events-none">01</div>
+                <div class="w-24 h-24 md:w-32 md:h-32 border-2 border-[#ff0055] rounded-full flex justify-center items-center text-[#ff0055] shadow-[0_0_40px_rgba(255,0,85,0.2)] shrink-0 font-cinzel text-4xl md:text-5xl bg-black/50 backdrop-blur-md z-10">I</div>
+                <div class="z-10 bg-black/50 p-10 rounded-3xl backdrop-blur-lg border border-white/10">
+                    <h3 class="text-5xl md:text-6xl font-cinzel mb-8 text-white tracking-wide text-shadow-lg">Zero Variables</h3>
+                    <p class="text-gray-300 text-2xl md:text-3xl font-light leading-relaxed">
                         Your space, your career, your ambitions. No pressure, no ticking clocks. Just absolute respect for the freedom that makes you, <span class="text-[#ff0055] font-semibold italic">you</span>.
                     </p>
                 </div>
@@ -264,12 +286,12 @@
 
         <!-- PAGE 3: Phase 2 -->
         <section class="snap-page">
-            <div class="z-10 max-w-5xl w-full flex flex-col md:flex-row-reverse items-center gap-8 md:gap-16 px-6 relative">
-                <div class="text-[12rem] md:text-[18rem] font-cinzel font-bold text-white opacity-[0.02] absolute right-0 top-1/2 transform -translate-y-1/2 pointer-events-none">02</div>
-                <div class="w-20 h-20 md:w-24 md:h-24 border border-[#ff0055] rounded-full flex justify-center items-center text-[#ff0055] shadow-[0_0_30px_rgba(255,0,85,0.2)] shrink-0 font-cinzel text-3xl md:text-4xl bg-black/50 backdrop-blur-sm z-10">II</div>
-                <div class="z-10 bg-black/40 p-8 rounded-2xl backdrop-blur-md border border-white/5 md:text-right">
-                    <h3 class="text-4xl md:text-5xl font-cinzel mb-6 text-white tracking-wide glow-text">The Core Connection</h3>
-                    <p class="text-gray-300 text-xl md:text-2xl font-light leading-relaxed">
+            <div class="z-10 max-w-6xl w-full flex flex-col md:flex-row-reverse items-center gap-10 md:gap-20 px-8 relative">
+                <div class="text-[15rem] md:text-[20rem] font-cinzel font-bold text-white opacity-[0.02] absolute right-0 top-1/2 transform -translate-y-1/2 pointer-events-none">02</div>
+                <div class="w-24 h-24 md:w-32 md:h-32 border-2 border-[#ff0055] rounded-full flex justify-center items-center text-[#ff0055] shadow-[0_0_40px_rgba(255,0,85,0.2)] shrink-0 font-cinzel text-4xl md:text-5xl bg-black/50 backdrop-blur-md z-10">II</div>
+                <div class="z-10 bg-black/50 p-10 rounded-3xl backdrop-blur-lg border border-white/10 md:text-right">
+                    <h3 class="text-5xl md:text-6xl font-cinzel mb-8 text-white tracking-wide text-shadow-lg">The Core Connection</h3>
+                    <p class="text-gray-300 text-2xl md:text-3xl font-light leading-relaxed">
                         Building a foundation based on absolute truth. No mind games, no guessing. Just 100% transparency and a bond defined by deep, unshakeable trust.
                     </p>
                 </div>
@@ -278,17 +300,17 @@
 
         <!-- PAGE 4: The Climax -->
         <section class="snap-page relative">
-            <div class="text-center z-10 max-w-4xl w-full px-6">
-                <h3 class="text-5xl md:text-7xl font-cinzel mb-8 text-[#ff0055] glow-brand tracking-widest">The Reality</h3>
-                <p class="text-gray-200 text-2xl md:text-3xl font-light leading-relaxed mb-16">
+            <div class="text-center z-10 max-w-5xl w-full px-8">
+                <h3 class="text-6xl md:text-8xl font-cinzel mb-10 text-[#ff0055] glow-brand tracking-widest">The Reality</h3>
+                <p class="text-gray-200 text-3xl md:text-4xl font-light leading-relaxed mb-20">
                     Standing by your side like a rock. Supporting your vision. Making this entire chaotic universe feel like home.
                 </p>
                 
-                <div class="relative p-12 rounded-3xl border border-[#ff0055]/30 bg-[#0a0a0a]/90 backdrop-blur-xl shadow-[0_0_50px_rgba(255,0,85,0.1)] overflow-hidden group hover:shadow-[0_0_80px_rgba(255,0,85,0.2)] transition-all duration-700 transform hover:-translate-y-2">
-                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#ff005515] to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-700"></div>
-                    <p class="font-bold text-white text-3xl md:text-4xl font-cinzel relative z-10 leading-relaxed">
+                <div class="relative p-16 rounded-[3rem] border border-[#ff0055]/40 bg-[#0a0a0a]/90 backdrop-blur-2xl shadow-[0_0_60px_rgba(255,0,85,0.15)] overflow-hidden group hover:shadow-[0_0_100px_rgba(255,0,85,0.3)] transition-all duration-700 transform hover:-translate-y-3">
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#ff005520] to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-700"></div>
+                    <p class="font-bold text-white text-4xl md:text-5xl font-cinzel relative z-10 leading-relaxed">
                         The direct, unchangeable truth is: <br>
-                        <span class="text-[#ff0055] mt-8 block text-5xl md:text-7xl glow-brand tracking-wide">I love you, completely.</span>
+                        <span class="text-[#ff0055] mt-10 block text-6xl md:text-8xl glow-brand tracking-wide">I love you, completely.</span>
                     </p>
                 </div>
             </div>
@@ -296,14 +318,14 @@
 
         <!-- PAGE 5: The Exit -->
         <section class="snap-page">
-            <div class="text-center z-10 bg-[#050505]/80 p-12 rounded-3xl border border-white/5 backdrop-blur-md">
-                <p class="font-mono text-xs md:text-sm text-gray-500 tracking-[0.4em] uppercase mb-12">
+            <div class="text-center z-10 bg-[#050505]/90 p-16 rounded-[3rem] border border-white/10 backdrop-blur-xl">
+                <p class="font-mono text-sm md:text-base text-gray-500 tracking-[0.5em] uppercase mb-16">
                     [ Calculating final parameters... ]
                 </p>
                 <div>
-                    <p class="text-gray-300 font-light text-2xl md:text-4xl leading-relaxed">
+                    <p class="text-gray-300 font-light text-3xl md:text-5xl leading-relaxed">
                         I’m waiting for you to complete the equation. <br>
-                        <span class="text-[#ff0055] font-bold tracking-[0.3em] uppercase block mt-10 text-lg md:text-xl glow-brand">Take your time.</span>
+                        <span class="text-[#ff0055] font-bold tracking-[0.4em] uppercase block mt-12 text-xl md:text-2xl glow-brand">Take your time.</span>
                     </p>
                 </div>
             </div>
@@ -316,9 +338,8 @@
     <script>
         /**
          * RIGVERA: EPIC FLIGHT PHYSICS & LOGIC
-         * - Engineered for extreme visual fidelity.
-         * - Canvas Particle System for Hearts & Sparks explosion.
-         * - GSAP Timelines for majestic slow-motion arrow flight.
+         * Dhyan se dekho bhai, is engine mein hum custom mathematical calculations 
+         * use kar rahe hain taaki SVG bow realistic tarike se bend ho sake.
          */
 
         // --- DOM Cache ---
@@ -328,7 +349,7 @@
         const hint = document.getElementById('interaction-hint');
         const wordsContainer = document.getElementById('words-container');
         
-        // SVG Architecture
+        // SVG Architecture Elements
         const bowWood = document.getElementById('bow-wood');
         const bowString = document.getElementById('bow-string');
         const armPull = document.getElementById('arm-pull');
@@ -338,12 +359,14 @@
         const arrowFletch = document.getElementById('arrow-fletch');
         const archerAura = document.getElementById('archer-aura');
 
+        // Global State Machine
         const STATE = {
             phase: 'idle', 
             charge: 0,     
             wordTimer: null
         };
 
+        // Magical Words for Invocation
         const MAGICAL_WORDS = [
             "HONESTY", "TRUST", "RESPECT", "AUTHENTICITY", "LOVE", 
             "CLARITY", "DEVOTION", "PATIENCE", "TRUTH", "STABILITY"
@@ -351,27 +374,28 @@
 
         // --- 1. PHYSICS & VISUAL ENGINE FOR CHARGING ---
         function updateArcherPhysics(chargePercent) {
-            const tension = chargePercent / 100; // 0 to 1
+            const tension = chargePercent / 100; // Tension 0 se 1 tak
             
-            // The Bow is held horizontally (Q 200,60 is normal, pulls down to Q 200,120)
+            // 1. Bow Bending Logic
+            // The Bow is held horizontally (Q 200,60 normal, pulls down to Q 200,120)
             const woodControlY = 60 + (tension * 60); 
             bowWood.setAttribute('d', `M 50,100 Q 200,${woodControlY} 350,100`);
 
-            // The String & Arrow pull straight DOWNwards (since aiming UP)
-            const pullDistance = tension * 80; // Pulls down by max 80px
+            // 2. String & Arrow Pulling Logic (Straight DOWN)
+            const pullDistance = tension * 85; // Pulls down by max 85px
             const stringY = 100 + pullDistance;
             
-            bowString.setAttribute('d', `M 52,98 L 200,${stringY} 348,98`);
-            armPull.setAttribute('d', `M 170,210 Q 180,150 200,${stringY}`);
+            bowString.setAttribute('d', `M 54,98 L 200,${stringY} 346,98`);
+            armPull.setAttribute('d', `M 175,210 Q 180,150 200,${stringY}`);
             gsap.set(arrow, { y: pullDistance });
 
-            // Magical Color Shift: Dark grey to Glowing Heart Red
+            // 3. Magical Color Shift: Dark grey to Glowing Heart Red
             const isCharged = tension > 0.3;
             const isFullyCharged = tension > 0.8;
             
-            arrowShaft.setAttribute('stroke', isCharged ? '#ff0055' : '#444');
-            arrowTip.setAttribute('fill', isCharged ? '#ff0055' : '#444');
-            arrowFletch.setAttribute('fill', isCharged ? '#ff0055' : '#444');
+            arrowShaft.setAttribute('stroke', isCharged ? '#ff0055' : '#777');
+            arrowTip.setAttribute('fill', isCharged ? '#ff0055' : '#777');
+            arrowFletch.setAttribute('fill', isCharged ? '#ff0055' : '#777');
             
             if(isFullyCharged) {
                 arrow.classList.add('svg-glow-heart');
@@ -389,24 +413,24 @@
             const el = document.createElement('div');
             el.innerText = MAGICAL_WORDS[Math.floor(Math.random() * MAGICAL_WORDS.length)];
             
-            // Size scales with charge
-            const baseSize = window.innerWidth < 768 ? 14 : 20;
-            const size = baseSize + (STATE.charge / 100 * 15);
+            // Text Size scales with charge
+            const baseSize = window.innerWidth < 768 ? 16 : 24;
+            const size = baseSize + (STATE.charge / 100 * 20);
             
             el.className = `magical-word`;
             el.style.fontSize = `${size}px`;
-            el.style.color = STATE.charge > 80 ? '#ff88aa' : '#ffffff';
+            el.style.color = STATE.charge > 80 ? '#ffb3c6' : '#ffffff';
             
-            // Spawn inside the wrapper area
-            const startX = 20 + Math.random() * 60; // 20% to 80%
+            // Spawning Logic (X axis spread)
+            const startX = 15 + Math.random() * 70; // 15% to 85% width
             el.style.left = `${startX}%`;
             el.style.bottom = `50%`;
             
             wordsContainer.appendChild(el);
             
-            // Cinematic float upwards (Aiming towards the sky)
-            const horizontalDrift = (Math.random() - 0.5) * 200;
-            const verticalTravel = -250 - (STATE.charge * 4); 
+            // Cinematic floating upwards
+            const horizontalDrift = (Math.random() - 0.5) * 250;
+            const verticalTravel = -300 - (STATE.charge * 5); 
             
             gsap.to(el, {
                 y: verticalTravel,
@@ -423,11 +447,11 @@
         function chargeLoop() {
             if(STATE.phase !== 'charging') return;
             
-            STATE.charge += 0.5; // Smooth, dramatic charging speed
+            STATE.charge += 0.45; // Smooth, dramatic charging speed
             
             if(STATE.charge >= 100) {
                 STATE.charge = 100;
-                executeMajesticFlight(); // BOOM!
+                executeMajesticFlight(); // BOOM! Target Hit
             }
             
             chargeBar.style.width = `${STATE.charge}%`;
@@ -440,11 +464,13 @@
             
             STATE.phase = 'charging';
             
+            // Show Charge UI
             chargeContainer.style.opacity = 1;
             hint.style.opacity = 0;
             btn.classList.add('charging');
 
-            STATE.wordTimer = setInterval(spawnMagicalWord, 400); 
+            // Start Emitting Words
+            STATE.wordTimer = setInterval(spawnMagicalWord, 350); 
             gsap.ticker.add(chargeLoop);
         }
 
@@ -457,7 +483,7 @@
             clearInterval(STATE.wordTimer);
             btn.classList.remove('charging');
 
-            // Elastic snap back if failed
+            // Elastic snap back if focus is broken
             if(STATE.charge < 100) {
                 gsap.to(STATE, {
                     charge: 0,
@@ -476,13 +502,14 @@
             }
         }
 
+        // Bind Mouse/Touch Events
         btn.addEventListener('mousedown', handlePointerDown);
         btn.addEventListener('touchstart', handlePointerDown, {passive: false});
         window.addEventListener('mouseup', handlePointerUp);
         window.addEventListener('touchend', handlePointerUp);
 
 
-        // --- 4. THE EPIC FLIGHT SEQUENCE ---
+        // --- 4. THE EPIC FLIGHT SEQUENCE & CELEBRATION ---
         function executeMajesticFlight() {
             STATE.phase = 'flight';
             gsap.ticker.remove(chargeLoop);
@@ -494,25 +521,28 @@
             const tl = gsap.timeline();
 
             // 4.1 Majestic Slow-Motion Arrow Flight
-            // Travels far beyond screen top (-2000px) over 2.5 seconds. Epic feel.
-            tl.to(arrow, { y: -2000, duration: 2.5, ease: "power2.in" }, "shoot");
+            // Traveling far beyond screen top (-2500px) over 2.5 seconds.
+            tl.to(arrow, { y: -2500, duration: 2.5, ease: "power2.in" }, "shoot");
             
             // Glowing trail follows the heart arrow
-            tl.to('#arrow-trail', { opacity: 1, height: "150vh", y: -2000, duration: 2.5, ease: "power2.in" }, "shoot");
+            tl.to('#arrow-trail', { opacity: 1, height: "150vh", y: -2500, duration: 2.5, ease: "power2.in" }, "shoot");
             
-            // Bow snaps back forcefully
-            tl.to(bowString, { attr: { d: "M 52,98 L 200,100 L 348,98" }, duration: 0.2, ease: "back.out(3)" }, "shoot");
+            // Bow snaps back forcefully (Release Tension)
+            tl.to(bowString, { attr: { d: "M 54,98 L 200,100 L 346,98" }, duration: 0.2, ease: "back.out(3)" }, "shoot");
             tl.to(bowWood, { attr: { d: "M 50,100 Q 200,60 350,100" }, duration: 0.2, ease: "back.out(3)" }, "shoot");
-            tl.to(armPull, { attr: { d: "M 170,210 Q 180,150 200,100" }, duration: 0.2, ease: "back.out(3)" }, "shoot");
+            tl.to(armPull, { attr: { d: "M 175,210 Q 180,150 200,100" }, duration: 0.2, ease: "back.out(3)" }, "shoot");
 
             // 4.2 The Impact (When arrow reaches the top)
             tl.add(() => {
                 STATE.phase = 'impact';
-                ParticleEngine.explode(); // High-end Canvas fireworks
+                ParticleEngine.explode(); // High-end Canvas fireworks!
                 
-                // Reveal "Welcome Khushbu..."
+                // MAIN FIX: Bring in the Celebration Text Container
                 const celebTL = gsap.timeline();
-                celebTL.to('#celeb-text-1', {opacity: 1, y: -20, duration: 1.5, ease: "power2.out"})
+                // Ensure parent container is visible first
+                celebTL.to('#layer-celebration-text', { opacity: 1, duration: 0.5 })
+                       // Then animate the children beautifully
+                       .to('#celeb-text-1', {opacity: 1, y: -20, duration: 1.5, ease: "power2.out"})
                        .to('#celeb-text-2', {opacity: 1, scale: 1, duration: 2, ease: "elastic.out(1, 0.5)"}, "-=0.8");
             }, "shoot+=2.5");
 
@@ -543,7 +573,7 @@
             particles: [],
             isActive: false,
 
-            // Math to draw a perfect heart
+            // Pure Math to draw a perfect heart on Canvas
             drawHeart: function(ctx, x, y, size, color, alpha) {
                 ctx.save();
                 ctx.globalAlpha = alpha;
@@ -555,8 +585,8 @@
                 ctx.bezierCurveTo(-size/2, size/2, 0, size*0.8, 0, size);
                 ctx.bezierCurveTo(0, size*0.8, size/2, size/2, size/2, size/4);
                 ctx.bezierCurveTo(size/2, 0, 0, 0, 0, size/4);
-                // Heart Glow
-                ctx.shadowBlur = 15;
+                // Heart Glow Effect
+                ctx.shadowBlur = 20;
                 ctx.shadowColor = color;
                 ctx.fill();
                 ctx.restore();
@@ -571,26 +601,26 @@
 
                 const colors = ['#ffffff', '#ff0055', '#ff4d88', '#ffb3c6', '#d4af37'];
 
-                // 400 Premium Particles
-                for(let i = 0; i < 400; i++) {
+                // Generate 500 Premium Particles for massive impact
+                for(let i = 0; i < 500; i++) {
                     const angle = Math.random() * Math.PI * 2;
-                    const velocity = Math.random() * 30 + 5; 
-                    const isHeart = Math.random() > 0.85; // 15% are distinct hearts
+                    const velocity = Math.random() * 35 + 5; 
+                    const isHeart = Math.random() > 0.80; // 20% are distinct hearts
 
                     this.particles.push({
                         x: centerX,
                         y: topY,
                         vx: Math.cos(angle) * velocity,
                         vy: Math.sin(angle) * velocity + (Math.random() * -15), // Upward explosive bias
-                        size: isHeart ? Math.random() * 18 + 12 : Math.random() * 5 + 1.5,
+                        size: isHeart ? Math.random() * 20 + 12 : Math.random() * 6 + 1.5,
                         color: colors[Math.floor(Math.random() * colors.length)],
                         life: 1.0,
-                        decay: Math.random() * 0.008 + 0.003, // Long lasting fade
-                        gravity: 0.25, 
-                        friction: 0.97, 
+                        decay: Math.random() * 0.007 + 0.002, // Long lasting fade
+                        gravity: 0.2, 
+                        friction: 0.96, 
                         isHeart: isHeart,
                         rotation: Math.random() * 360,
-                        rotSpeed: (Math.random() - 0.5) * 5
+                        rotSpeed: (Math.random() - 0.5) * 6
                     });
                 }
                 this.render();
@@ -606,6 +636,7 @@
                     if (p.life <= 0) return;
                     aliveCount++;
 
+                    // Physics Updates
                     p.vx *= p.friction;
                     p.vy *= p.friction;
                     p.vy += p.gravity;
@@ -614,6 +645,7 @@
                     p.life -= p.decay;
                     p.rotation += p.rotSpeed;
 
+                    // Draw Particle
                     if (p.life > 0) {
                         if (p.isHeart) {
                             this.drawHeart(ctx, p.x, p.y, p.size, p.color, Math.max(0, p.life));
@@ -623,7 +655,7 @@
                             ctx.fillStyle = p.color;
                             ctx.beginPath();
                             ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                            ctx.shadowBlur = 10;
+                            ctx.shadowBlur = 12;
                             ctx.shadowColor = p.color;
                             ctx.fill();
                             ctx.restore();
@@ -657,7 +689,7 @@
             const logsContainer = document.getElementById('term-logs');
             const finalMsg = document.getElementById('term-final-msg');
 
-            // Typing effect for logs
+            // Typing effect for realistic logs
             for(let i = 0; i < TERMINAL_LOGS.length; i++) {
                 const logEl = document.createElement('div');
                 logEl.innerText = `> ${TERMINAL_LOGS[i]}`;
@@ -683,6 +715,7 @@
             }});
         }
 
+        // Initialize Snap Scrolling Timeline
         function initFinalJourney() {
             STATE.phase = 'pages';
             const pagesLayer = document.getElementById('layer-pages');
