@@ -8,7 +8,7 @@
     <!-- Fonts: High-end tech & romantic aesthetics -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS (CDN for styling) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -21,255 +21,209 @@
                         mono: ['Share Tech Mono', 'monospace'],
                         cinzel: ['Cinzel', 'serif'],
                     },
-                    colors: { brand: '#ff0044', darkBg: '#030303' }
+                    colors: { 
+                        brand: '#ff0055', /* Magical Pink/Red for Mohini Astra */
+                        darkBg: '#020202' 
+                    }
                 }
             }
         }
     </script>
 
-    <!-- GSAP for Scroll and Timeline Animations -->
+    <!-- GSAP for Animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <style>
         /* Base Resets */
         * { box-sizing: border-box; user-select: none; -webkit-user-select: none; }
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background-color: #030303; overflow: hidden; color: #fff; font-family: 'Montserrat', sans-serif; touch-action: none; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background-color: #020202; overflow: hidden; color: #fff; font-family: 'Montserrat', sans-serif; touch-action: none; }
 
-        /* Hide scrollbar but keep functionality for Phase 4 */
-        .hide-scroll::-webkit-scrollbar { display: none; }
-        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+        /* Magical Mohini Astra Glows */
+        .mohini-glow { filter: drop-shadow(0 0 15px #ff0055) drop-shadow(0 0 30px #ff2a75); transition: all 1s ease; }
+        .text-glow { text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.5); }
+        .word-summon { font-family: 'Cinzel', serif; position: absolute; color: white; opacity: 0; letter-spacing: 4px; font-weight: 600; filter: drop-shadow(0 0 10px white); }
 
-        /* --- Custom UI Effects --- */
-        .glow-text { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3); }
-        .glow-red { text-shadow: 0 0 10px #ff0044, 0 0 30px #ff0044; }
-        .svg-glow { filter: drop-shadow(0 0 15px rgba(255,0,68,0.6)); transition: filter 0.1s; }
+        /* The Cinematic Interaction Button */
+        #action-btn {
+            position: absolute; bottom: 8%; left: 50%; transform: translateX(-50%);
+            padding: 12px 30px; border-radius: 30px;
+            background: rgba(20, 20, 20, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff; font-family: 'Cinzel', serif; letter-spacing: 3px; font-size: 12px;
+            cursor: pointer; z-index: 50; transition: all 0.4s ease;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        #action-btn:active { transform: translateX(-50%) scale(0.95); background: rgba(255, 0, 85, 0.2); border-color: #ff0055; }
         
-        /* The Interaction Button / Orb */
-        #interact-btn {
-            position: absolute; bottom: 10%; left: 50%; transform: translateX(-50%);
-            width: 80px; height: 80px; border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,0,68,0.2) 0%, rgba(0,0,0,0) 70%);
-            border: 1px solid rgba(255,0,68,0.5);
-            display: flex; justify-content: center; align-items: center;
-            cursor: pointer; z-index: 50; transition: all 0.3s ease;
-            box-shadow: 0 0 20px rgba(255,0,68,0.2);
-            animation: pulse-ring 2s infinite;
-        }
-        #interact-btn::before { content: 'HOLD'; font-size: 10px; letter-spacing: 2px; color: #ff0044; font-weight: bold; }
-        @keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 rgba(255,0,68,0.4); } 70% { box-shadow: 0 0 0 20px rgba(255,0,68,0); } 100% { box-shadow: 0 0 0 0 rgba(255,0,68,0); } }
+        .btn-pulse { animation: soft-pulse 2s infinite; }
+        @keyframes soft-pulse { 0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.2); } 70% { box-shadow: 0 0 0 15px rgba(255,255,255,0); } 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); } }
 
-        /* Progress Bar for holding */
-        #charge-bar-container { position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%); width: 200px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; z-index: 50; opacity: 0; transition: opacity 0.3s; }
-        #charge-bar { width: 0%; height: 100%; background: #ff0044; border-radius: 2px; box-shadow: 0 0 10px #ff0044; }
+        /* Lightning Overlay */
+        #lightning-overlay { position: fixed; inset: 0; background: #ffffff; z-index: 100; opacity: 0; pointer-events: none; }
 
-        /* CRT Terminal Effects */
-        .crt-overlay::after {
-            content: " "; display: block; position: absolute; top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            z-index: 2; background-size: 100% 2px, 3px 100%; pointer-events: none;
-        }
+        /* Terminal Effect */
+        .crt-overlay::after { content: " "; display: block; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); z-index: 2; background-size: 100% 2px, 3px 100%; pointer-events: none; }
         .blinking-cursor::after { content: '█'; animation: blink 1s step-start infinite; color: #00ff41; }
         @keyframes blink { 50% { opacity: 0; } }
 
-        /* Shake Animations */
-        @keyframes shake-mild { 0% { transform: translate(1px, 1px) rotate(0deg); } 50% { transform: translate(-1px, -2px) rotate(-1deg); } 100% { transform: translate(-3px, 0px) rotate(1deg); } }
-        @keyframes shake-hard { 0% { transform: translate(3px, 3px) rotate(0deg); } 50% { transform: translate(-3px, -3px) rotate(-2deg); } 100% { transform: translate(3px, -2px) rotate(2deg); } }
-        .shake-lvl-1 { animation: shake-mild 0.2s infinite; }
-        .shake-lvl-2 { animation: shake-hard 0.1s infinite; }
-
-        /* Glitch Text Effect */
-        .glitch-effect { position: relative; display: inline-block; }
-        .glitch-effect::before, .glitch-effect::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #030303; }
-        .glitch-effect::before { left: 2px; text-shadow: -2px 0 red; clip: rect(24px, 550px, 90px, 0); animation: glitch-anim 3s infinite linear alternate-reverse; }
-        .glitch-effect::after { left: -2px; text-shadow: -2px 0 blue; clip: rect(85px, 550px, 140px, 0); animation: glitch-anim 2.5s infinite linear alternate-reverse; }
-        @keyframes glitch-anim { 0% { clip: rect(11px, 9999px, 83px, 0); } 20% { clip: rect(54px, 9999px, 12px, 0); } 40% { clip: rect(82px, 9999px, 32px, 0); } 60% { clip: rect(23px, 9999px, 99px, 0); } 80% { clip: rect(64px, 9999px, 21px, 0); } 100% { clip: rect(31px, 9999px, 78px, 0); } }
+        /* Full Screen Snap Pages for Phase 4 */
+        .snap-container { display: none; height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+        .snap-container::-webkit-scrollbar { display: none; }
+        .snap-page { height: 100vh; width: 100vw; scroll-snap-align: start; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; padding: 2rem; }
 
         /* Layers */
         #layer-interaction { z-index: 20; position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; }
         #layer-shatter { z-index: 30; position: absolute; inset: 0; pointer-events: none; }
         #layer-terminal { z-index: 40; position: absolute; inset: 0; background: #000; display: none; padding: 2rem; }
-        #layer-final { z-index: 50; position: absolute; inset: 0; display: none; overflow-y: auto; overflow-x: hidden; background: radial-gradient(circle at top, #110005 0%, #000000 100%); }
-        #quantum-bg { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
-
-        /* Lightning Overlay */
-        #lightning-overlay { position: fixed; inset: 0; background: white; z-index: 100; opacity: 0; pointer-events: none; }
     </style>
 </head>
 <body id="main-body">
 
-    <!-- 1. The Lightning Flash Overlay -->
+    <!-- Lightning Flash Overlay -->
     <div id="lightning-overlay"></div>
 
-    <!-- 2. Interactive Phase (Archer & Holding Mechanics) -->
+    <!-- LAYER 1: The Cinematic Interaction (Archer & Summoning) -->
     <div id="layer-interaction">
-        <!-- Hint Text -->
-        <div id="interaction-hint" class="absolute top-1/4 text-center w-full px-4 text-gray-400 text-sm tracking-[0.2em] uppercase font-light transition-opacity duration-500">
-            Hold the Orb to Focus Energy<br>
-            <span class="text-[10px] text-gray-600 mt-2 block">Requires 100% connection</span>
-        </div>
+        
+        <!-- The Words Container (Honesty, Trust, Respect) -->
+        <div id="words-container" class="absolute inset-0 pointer-events-none z-10 overflow-hidden"></div>
 
-        <!-- The SVG Archer (Lord Rama inspired) -->
-        <div id="archer-wrapper" class="relative w-[300px] h-[400px] mt-20">
-            <!-- Dynamic Arrow Trail -->
-            <div id="arrow-trail" class="absolute left-1/2 bottom-[40%] w-1 h-0 bg-gradient-to-t from-transparent to-[#ff0044] opacity-0 blur-[2px]" style="transform: translateX(-50%);"></div>
+        <!-- The Ancient Archer (Organic/Realistic Silhouette) -->
+        <div id="archer-wrapper" class="relative w-[320px] h-[450px] mt-10">
+            <!-- Magical Stardust Trail for Arrow -->
+            <div id="arrow-trail" class="absolute left-[48%] bottom-[45%] w-1.5 h-0 bg-gradient-to-t from-transparent via-[#ff0055] to-white opacity-0 blur-[2px] z-0" style="transform: translateX(-50%);"></div>
 
-            <svg id="archer-svg" viewBox="0 0 200 300" class="w-full h-full overflow-visible">
-                <!-- Aura that grows with charge -->
-                <circle id="archer-aura" cx="100" cy="220" r="50" fill="rgba(255,0,68,0.0)" filter="blur(20px)"/>
+            <svg id="archer-svg" viewBox="0 0 400 500" class="w-full h-full overflow-visible relative z-10">
+                <!-- Aura -->
+                <circle id="archer-aura" cx="200" cy="300" r="100" fill="rgba(255,0,85,0)" filter="blur(30px)"/>
                 
-                <!-- Archer Body (Static base) -->
-                <g id="archer-body" fill="#151515">
-                    <circle cx="100" cy="180" r="14" fill="#222"/> <!-- Head -->
-                    <ellipse cx="100" cy="163" rx="6" ry="8" fill="#222"/> <!-- Bun -->
-                    <path d="M 85 195 L 115 195 L 125 280 L 100 290 L 75 280 Z" fill="#1a1a1a"/> <!-- Torso -->
-                    <path d="M 90 285 L 70 295 L 60 295" fill="none" stroke="#1a1a1a" stroke-width="12" stroke-linecap="round"/> <!-- Leg -->
-                    <path d="M 110 285 L 130 295 L 140 295" fill="none" stroke="#1a1a1a" stroke-width="12" stroke-linecap="round"/> <!-- Leg -->
-                </g>
-
-                <!-- Dynamic Bow Elements (Manipulated via JS) -->
-                <path id="bow-wood" d="M 20 120 Q 100 90 180 120" fill="none" stroke="#444" stroke-width="5" stroke-linecap="round"/>
-                <path id="bow-string" d="M 22 118 Q 100 120 178 118" fill="none" stroke="#666" stroke-width="1.5"/>
+                <!-- Organic Archer Silhouette (Arjuna Style) -->
+                <!-- Detailed path representing a kneeling ancient warrior with tied back hair/mukut, muscular back, and traditional dhoti drape -->
+                <path id="archer-body" d="M 200,120 C 180,120 170,140 175,160 C 180,180 190,190 190,210 C 190,240 160,260 150,290 C 140,320 130,350 150,380 C 160,395 180,400 200,400 C 220,400 240,390 250,370 C 260,340 255,300 245,280 C 230,250 225,230 220,200 C 215,170 225,140 200,120 Z M 190,125 C 190,105 210,105 210,125 C 210,145 190,145 190,125 Z M 165,135 C 150,145 155,170 170,165 Z M 175,375 C 160,390 140,410 120,410 L 120,400 C 140,400 155,385 170,370 Z M 235,355 C 260,370 280,390 300,390 L 300,380 C 280,380 265,360 245,345 Z" fill="#151515"/>
                 
-                <!-- Arms -->
-                <line id="arm-front" x1="115" y1="200" x2="100" y2="105" stroke="#111" stroke-width="8" stroke-linecap="round"/>
-                <line id="arm-pull" x1="85" y1="200" x2="100" y2="120" stroke="#222" stroke-width="8" stroke-linecap="round"/>
+                <!-- Arms (Organic curves) -->
+                <path id="arm-bow" d="M 195,175 Q 160,190 145,150 Q 130,110 180,75" fill="none" stroke="#121212" stroke-width="14" stroke-linecap="round"/>
+                <path id="arm-pull" d="M 205,175 Q 240,190 215,220 Q 190,250 180,210" fill="none" stroke="#1c1c1c" stroke-width="12" stroke-linecap="round"/>
 
-                <!-- The Magical Arrow -->
-                <g id="the-arrow">
-                    <line id="arrow-shaft" x1="100" y1="120" x2="100" y2="40" stroke="#555" stroke-width="3" />
-                    <polygon id="arrow-tip" points="94,48 100,30 106,48" fill="#555" />
-                    <line id="arrow-fletching" x1="95" y1="110" x2="105" y2="110" stroke="#555" stroke-width="2" />
+                <!-- The Grand Bow -->
+                <path id="bow-wood" d="M 100,50 Q 220,-20 300,50" fill="none" stroke="#222" stroke-width="6" stroke-linecap="round"/>
+                
+                <!-- Bow String -->
+                <path id="bow-string" d="M 102,48 Q 200,50 298,48" fill="none" stroke="#666" stroke-width="1.5"/>
+
+                <!-- The Astra (Arrow) -->
+                <g id="the-arrow" opacity="1">
+                    <line id="arrow-shaft" x1="200" y1="50" x2="200" y2="-80" stroke="#555" stroke-width="3" />
+                    <polygon id="arrow-tip" points="190,-60 200,-95 210,-60" fill="#555" />
+                    <!-- Intricate fletching (feathers) -->
+                    <path id="arrow-fletching" d="M 195,30 L 185,50 L 195,40 Z M 205,30 L 215,50 L 205,40 Z" fill="#555"/>
                 </g>
             </svg>
-
-            <!-- Container for spawning floating mantras -->
-            <div id="mantra-container" class="absolute inset-0 pointer-events-none overflow-visible"></div>
         </div>
 
-        <!-- Interactive UI -->
-        <div id="interact-btn"></div>
-        <div id="charge-bar-container">
-            <div id="charge-bar"></div>
-        </div>
+        <!-- Cinematic Action Button -->
+        <button id="action-btn" class="btn-pulse">BEGIN SUMMONING</button>
     </div>
 
-    <!-- 3. Quantum Shatter Canvas Layer -->
+    <!-- LAYER 2: Quantum Shatter Canvas -->
     <canvas id="layer-shatter"></canvas>
 
-    <!-- 4. Hacker Terminal Phase -->
+    <!-- LAYER 3: Hacker Terminal Sequence -->
     <div id="layer-terminal" class="crt-overlay flex-col justify-center text-[#00ff41] font-mono text-sm md:text-lg">
-        <div id="term-logs" class="space-y-2 opacity-80 h-[60vh] overflow-hidden flex flex-col justify-end mb-8">
-            <!-- Dynamic logs will be injected here -->
-        </div>
+        <div id="term-logs" class="space-y-3 opacity-80 h-[60vh] overflow-hidden flex flex-col justify-end mb-8"></div>
         <div class="mt-4 border-t border-[#00ff41] pt-4">
-            <span class="text-white">root@quantum-core:~#</span> <span id="term-final-msg" class="text-[#ff0044] font-bold text-xl md:text-3xl text-shadow-sm"></span><span class="blinking-cursor"></span>
+            <span class="text-white">root@quantum:~#</span> <span id="term-final-msg" class="text-[#ff0055] font-bold text-xl md:text-3xl"></span><span class="blinking-cursor"></span>
         </div>
     </div>
 
-    <!-- 5. Final Romantic Scrollable UI -->
-    <div id="layer-final" class="hide-scroll">
-        <!-- Interactive Background Canvas for Phase 4 -->
-        <canvas id="quantum-bg"></canvas>
+    <!-- LAYER 4: The Snap Pages (Cinematic Storytelling) -->
+    <div id="layer-pages" class="snap-container bg-gradient-to-b from-[#0a0003] to-[#000000]">
+        
+        <!-- Background Ambient Glow -->
+        <div class="fixed inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#ff005510] via-transparent to-transparent opacity-50"></div>
 
-        <div class="max-w-4xl mx-auto px-6 pt-[20vh] pb-32">
-            
-            <!-- Hero Section -->
-            <div class="min-h-[80vh] flex flex-col justify-center items-center text-center">
-                <h1 class="gsap-reveal text-4xl md:text-6xl lg:text-7xl font-cinzel font-bold text-transparent bg-clip-text bg-gradient-to-r from-gray-300 via-white to-gray-500 mb-8 leading-tight">
+        <!-- Page 1: The Hook -->
+        <section class="snap-page">
+            <div class="text-center z-10 max-w-3xl">
+                <h1 class="text-3xl md:text-6xl font-cinzel text-transparent bg-clip-text bg-gradient-to-r from-gray-200 via-white to-gray-400 mb-6 leading-relaxed">
                     Distance is a myth.<br>Time is relative.
                 </h1>
-                <div class="gsap-reveal mt-8 mb-16 w-1 h-24 bg-gradient-to-b from-[#ff0044] to-transparent mx-auto rounded-full"></div>
-                <h2 class="gsap-reveal text-2xl md:text-4xl lg:text-5xl font-light italic text-[#ff0044] drop-shadow-[0_0_15px_rgba(255,0,68,0.5)] leading-relaxed">
+                <div class="w-[1px] h-20 bg-gradient-to-b from-[#ff0055] to-transparent mx-auto my-8"></div>
+                <h2 class="text-xl md:text-4xl font-light italic text-[#ff0055] drop-shadow-[0_0_15px_rgba(255,0,85,0.4)]">
                     "But your smile?<br>That’s an unquantifiable constant."
                 </h2>
-                
-                <p class="gsap-reveal mt-20 text-gray-400 tracking-widest text-sm uppercase animate-bounce">
-                    [ Scroll to Decode ]
-                </p>
+                <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce opacity-50">
+                    <span class="text-xs tracking-[0.3em] uppercase mb-2">Swipe Up</span>
+                    <div class="w-4 h-4 border-b-2 border-r-2 border-white transform rotate-45"></div>
+                </div>
             </div>
+        </section>
 
-            <!-- The Manifesto / Timeline -->
-            <div class="mt-32 space-y-32">
-                
-                <!-- Section 1 -->
-                <div class="gsap-timeline-item relative flex flex-col md:flex-row items-center gap-8 group">
-                    <div class="w-16 h-16 md:w-24 md:h-24 rounded-full border border-gray-700 flex items-center justify-center text-gray-500 font-mono text-xl transition-all duration-700 group-hover:border-[#ff0044] group-hover:text-[#ff0044] group-hover:shadow-[0_0_30px_rgba(255,0,68,0.3)] shrink-0">
-                        01
-                    </div>
-                    <div>
-                        <h3 class="text-2xl md:text-4xl font-semibold mb-4 text-gray-100">Zero Variables</h3>
-                        <p class="text-gray-400 text-lg leading-relaxed font-light">
-                            Your space, your career, your ambitions. No pressure, no ticking clocks. Just absolute respect for the freedom that makes you, <span class="text-white font-medium italic">you</span>.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Section 2 -->
-                <div class="gsap-timeline-item relative flex flex-col md:flex-row items-center gap-8 group">
-                    <div class="w-16 h-16 md:w-24 md:h-24 rounded-full border border-gray-700 flex items-center justify-center text-gray-500 font-mono text-xl transition-all duration-700 group-hover:border-[#ff0044] group-hover:text-[#ff0044] group-hover:shadow-[0_0_30px_rgba(255,0,68,0.3)] shrink-0">
-                        02
-                    </div>
-                    <div>
-                        <h3 class="text-2xl md:text-4xl font-semibold mb-4 text-gray-100">The Core Connection</h3>
-                        <p class="text-gray-400 text-lg leading-relaxed font-light">
-                            Building a foundation (Rig) based on absolute truth (Vera). No mind games, no guessing. Just 100% transparency and a bond defined by deep, unshakeable trust.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Section 3 -->
-                <div class="gsap-timeline-item relative flex flex-col md:flex-row items-center gap-8 group">
-                    <div class="w-16 h-16 md:w-24 md:h-24 rounded-full border border-gray-700 flex items-center justify-center text-gray-500 font-mono text-xl transition-all duration-700 group-hover:border-[#ff0044] group-hover:text-[#ff0044] group-hover:shadow-[0_0_30px_rgba(255,0,68,0.3)] shrink-0 bg-[#ff0044]/5">
-                        03
-                    </div>
-                    <div>
-                        <h3 class="text-2xl md:text-4xl font-semibold mb-4 text-[#ff0044] glow-red">The Quantum Reality</h3>
-                        <p class="text-gray-300 text-lg md:text-xl leading-relaxed font-light">
-                            Standing by your side like a rock. Supporting your vision. Making this entire chaotic universe feel like home. 
-                            <br><br><span class="font-bold text-white text-xl">The direct, unchangeable truth is: I love you, completely.</span>
-                        </p>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Footer Exit -->
-            <div class="mt-48 pt-16 border-t border-gray-800 text-center pb-20">
-                <p class="font-mono text-sm text-gray-600 tracking-widest uppercase mb-6">
-                    [ Calculating final parameters... ]
-                </p>
-                <div class="inline-block px-8 py-4 bg-gray-900/50 rounded-lg border border-gray-800 backdrop-blur-sm hover:border-gray-600 transition-colors">
-                    <p class="text-gray-300 font-light text-lg">
-                        I’m waiting for you to complete the equation. <br>
-                        <span class="text-[#ff0044] font-semibold tracking-wider block mt-2">Take your time.</span>
+        <!-- Page 2: Zero Variables -->
+        <section class="snap-page">
+            <div class="z-10 max-w-4xl w-full flex flex-col md:flex-row items-center gap-10">
+                <div class="text-[8rem] md:text-[12rem] font-cinzel font-bold text-white opacity-5 absolute left-0 md:left-10 top-1/4 pointer-events-none">01</div>
+                <div class="w-16 h-16 border border-[#ff0055] rounded-full flex justify-center items-center text-[#ff0055] shadow-[0_0_20px_rgba(255,0,85,0.3)] shrink-0 font-cinzel text-2xl">I</div>
+                <div>
+                    <h3 class="text-3xl md:text-5xl font-cinzel mb-4 text-white">Zero Variables</h3>
+                    <p class="text-gray-400 text-lg md:text-xl font-light leading-relaxed">
+                        Your space, your career, your ambitions. No pressure, no ticking clocks. Just absolute respect for the freedom that makes you, <span class="text-white font-medium italic">you</span>.
                     </p>
                 </div>
             </div>
+        </section>
 
-        </div>
+        <!-- Page 3: The Core Connection -->
+        <section class="snap-page">
+            <div class="z-10 max-w-4xl w-full flex flex-col md:flex-row items-center gap-10">
+                <div class="text-[8rem] md:text-[12rem] font-cinzel font-bold text-white opacity-5 absolute right-0 md:right-10 top-1/4 pointer-events-none">02</div>
+                <div class="w-16 h-16 border border-[#ff0055] rounded-full flex justify-center items-center text-[#ff0055] shadow-[0_0_20px_rgba(255,0,85,0.3)] shrink-0 font-cinzel text-2xl">II</div>
+                <div>
+                    <h3 class="text-3xl md:text-5xl font-cinzel mb-4 text-white">The Core Connection</h3>
+                    <p class="text-gray-400 text-lg md:text-xl font-light leading-relaxed">
+                        Building a foundation based on absolute truth. No mind games, no guessing. Just 100% transparency and a bond defined by deep, unshakeable trust.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Page 4: The Quantum Reality & Climax -->
+        <section class="snap-page">
+            <div class="text-center z-10 max-w-4xl w-full px-4">
+                <h3 class="text-4xl md:text-6xl font-cinzel mb-8 text-[#ff0055] drop-shadow-[0_0_15px_rgba(255,0,85,0.5)]">The Reality</h3>
+                <p class="text-gray-200 text-xl md:text-2xl font-light leading-relaxed mb-12">
+                    Standing by your side like a rock. Supporting your vision. Making this entire chaotic universe feel like home.
+                </p>
+                <div class="p-8 border border-gray-800 bg-[#111111]/80 backdrop-blur-md rounded-xl shadow-2xl relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#ff005515] to-transparent opacity-50"></div>
+                    <p class="font-bold text-white text-2xl md:text-3xl font-cinzel relative z-10">
+                        The direct, unchangeable truth is: <br><span class="text-[#ff0055] mt-4 block text-4xl md:text-5xl">I love you, completely.</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Page 5: The Exit -->
+        <section class="snap-page">
+            <div class="text-center z-10">
+                <p class="font-mono text-sm text-gray-500 tracking-widest uppercase mb-8">
+                    [ Calculating final parameters... ]
+                </p>
+                <p class="text-gray-300 font-light text-xl md:text-2xl leading-relaxed">
+                    I’m waiting for you to complete the equation. <br>
+                    <span class="text-[#ff0055] font-semibold tracking-[0.2em] uppercase block mt-6 text-sm">Take your time.</span>
+                </p>
+            </div>
+        </section>
     </div>
 
     <!-- ========================================== -->
-    <!-- JAVASCRIPT LOGIC (The Brains of the App)   -->
+    <!-- JAVASCRIPT LOGIC (Cinematic Storyteller)   -->
     <!-- ========================================== -->
     <script>
-        gsap.registerPlugin(ScrollTrigger);
-
-        // --- GLOBAL STATE ---
-        let state = {
-            phase: 'interaction', // interaction -> strike -> shatter -> terminal -> final
-            charge: 0,            // 0 to 100
-            isCharging: false,
-            mantraInterval: null
-        };
-
-        // --- DOM Elements ---
-        const btn = document.getElementById('interact-btn');
-        const chargeBar = document.getElementById('charge-bar');
-        const chargeContainer = document.getElementById('charge-bar-container');
-        const body = document.getElementById('main-body');
-        const hint = document.getElementById('interaction-hint');
+        const btn = document.getElementById('action-btn');
+        const wordsContainer = document.getElementById('words-container');
         
         // SVG Elements
         const bowWood = document.getElementById('bow-wood');
@@ -280,229 +234,154 @@
         const arrowTip = document.getElementById('arrow-tip');
         const arrowFletch = document.getElementById('arrow-fletching');
         const archerAura = document.getElementById('archer-aura');
-
-        // Layers
-        const layerInteraction = document.getElementById('layer-interaction');
-        const layerTerminal = document.getElementById('layer-terminal');
-        const layerFinal = document.getElementById('layer-final');
         const lightning = document.getElementById('lightning-overlay');
+        const body = document.getElementById('main-body');
 
-        // --- 1. THE INTERACTION LOGIC (HOLD TO DRAW) ---
-        
-        // Baseline SVG Coordinates
-        const bowBaseY = 90; 
-        const stringBaseY = 120;
-        const arrowBaseY = 120;
+        let currentPhase = 0; // 0: Start, 1: Summoned, 2: Charged, 3: Released
 
-        function updateArcherVisuals(chargePercent) {
-            // Math: Calculate tension based on 0 to 1 charge
-            const tension = chargePercent / 100; // 0 to 1
-            
-            // 1. Bend the Bow Wood
-            // Q control point moves left and tension increases
-            const woodControlY = 90 + (tension * -40); // 90 to 50
-            bowWood.setAttribute('d', `M 20 120 Q 100 ${woodControlY} 180 120`);
-
-            // 2. Pull the String & Arrow
-            const pullDistance = tension * 120; // Max pull is 120px down
-            const stringY = 120 + pullDistance;
-            
-            bowString.setAttribute('d', `M 22 118 Q 100 ${stringY} 178 118`);
-            armPull.setAttribute('y2', stringY);
-            
-            // Move Arrow down
-            gsap.set(arrow, { y: pullDistance });
-
-            // 3. Colors & Glows (Visual feedback)
-            const redIntensity = Math.floor(tension * 255);
-            const colorHex = `#${redIntensity.toString(16).padStart(2,'0')}00${(85 - tension*85).toString(16).padStart(2,'0')}`; // Transition to #ff0044
-            
-            arrowShaft.setAttribute('stroke', tension > 0.5 ? '#ff0044' : '#555');
-            arrowTip.setAttribute('fill', tension > 0.5 ? '#ff0044' : '#555');
-            arrowFletch.setAttribute('stroke', tension > 0.5 ? '#ff0044' : '#555');
-            
-            if(tension > 0.8) {
-                arrow.classList.add('svg-glow');
-            } else {
-                arrow.classList.remove('svg-glow');
+        btn.addEventListener('click', () => {
+            if (currentPhase === 0) {
+                phase1SummonWords();
+            } else if (currentPhase === 1) {
+                phase2InvokeAstra();
+            } else if (currentPhase === 2) {
+                phase3Release();
             }
+        });
 
-            // Aura
-            archerAura.setAttribute('fill', `rgba(255,0,68,${tension * 0.15})`);
-
-            // 4. Screen Shake based on tension
-            if(tension > 0.8) {
-                body.className = 'shake-lvl-2';
-            } else if (tension > 0.4) {
-                body.className = 'shake-lvl-1';
-            } else {
-                body.className = '';
-            }
-        }
-
-        function spawnMantra() {
-            if(!state.isCharging) return;
-            const symbols = ['ॐ', 'ह्रीं', 'श्रीं', 'क्लीं', '✧', '✦', '⚡'];
-            const container = document.getElementById('mantra-container');
-            const el = document.createElement('div');
-            el.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+        // --- PHASE 1: The Summoning (Honesty, Trust, Respect) ---
+        function phase1SummonWords() {
+            currentPhase = 1;
+            btn.style.pointerEvents = 'none'; // Disable until animation finishes
+            btn.innerHTML = "SUMMONING...";
+            btn.classList.remove('btn-pulse');
             
-            // Random styling based on charge
-            const size = 14 + (state.charge/100 * 20); // Gets bigger as charge goes up
-            el.className = `absolute font-bold pointer-events-none drop-shadow-[0_0_10px_#ff0044]`;
-            el.style.color = state.charge > 80 ? '#ff0044' : '#888';
-            el.style.fontSize = `${size}px`;
-            el.style.left = `${40 + Math.random() * 20}%`;
-            el.style.bottom = `${30 + Math.random() * 20}%`;
+            const words = ["HONESTY", "TRUST", "RESPECT", "CLARITY"];
+            const wHeight = window.innerHeight;
+            const wWidth = window.innerWidth;
             
-            container.appendChild(el);
-            
-            gsap.to(el, {
-                y: -100 - (state.charge * 2), // Shoots higher when high charge
-                x: (Math.random() - 0.5) * 150,
-                opacity: 0,
-                scale: 2,
-                rotation: Math.random() * 360,
-                duration: 1 + Math.random(),
-                ease: "power2.out",
-                onComplete: () => el.remove()
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    btn.innerHTML = "INVOKE ASTRA";
+                    btn.classList.add('btn-pulse');
+                    btn.style.pointerEvents = 'auto';
+                }
             });
+
+            words.forEach((word, i) => {
+                const el = document.createElement('div');
+                el.innerText = word;
+                el.className = 'word-summon text-xl md:text-3xl';
+                // Start near top, random horizontal
+                el.style.top = '10%';
+                el.style.left = `${20 + Math.random() * 60}%`;
+                wordsContainer.appendChild(el);
+
+                // Cinematic fall and merge into the bow (center of screen approx)
+                tl.to(el, {
+                    y: wHeight * 0.5, // Move down towards archer
+                    x: (wWidth/2) - el.offsetLeft, // Move towards center
+                    opacity: 1,
+                    scale: 1.2,
+                    duration: 2,
+                    ease: "power2.out"
+                }, i * 0.8) // Stagger start times
+                .to(el, {
+                    opacity: 0,
+                    scale: 0.5,
+                    duration: 1,
+                    ease: "power2.in"
+                }, "-=0.5");
+            });
+
+            // Slight glow to bow as words merge
+            tl.to(archerAura, { attr: { fill: "rgba(255,255,255,0.1)" }, duration: 2 }, "-=2");
         }
 
-        function startCharge(e) {
-            if (e) e.preventDefault();
-            if (state.phase !== 'interaction') return;
-            
-            state.isCharging = true;
-            chargeContainer.style.opacity = 1;
-            hint.style.opacity = 0;
-            btn.style.transform = 'translateX(-50%) scale(0.9)';
-            btn.style.background = 'rgba(255,0,68,0.4)';
+        // --- PHASE 2: The Mohini Astra (Lightning & Glow) ---
+        function phase2InvokeAstra() {
+            currentPhase = 2;
+            btn.style.pointerEvents = 'none';
+            btn.innerHTML = "INVOKING...";
+            btn.classList.remove('btn-pulse');
 
-            state.mantraInterval = setInterval(spawnMantra, 150);
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    btn.innerHTML = "RELEASE";
+                    btn.style.background = "rgba(255,0,85,0.4)";
+                    btn.classList.add('btn-pulse');
+                    btn.style.pointerEvents = 'auto';
+                }
+            });
 
-            // Charging Loop
-            gsap.ticker.add(chargeLoop);
+            // 1. Pull the Bow Back
+            tl.to(bowWood, { attr: { d: "M 100,50 Q 150,-20 300,50" }, duration: 2, ease: "power2.inOut" }, "pull");
+            tl.to(bowString, { attr: { d: "M 102,48 Q 200,150 298,48" }, duration: 2, ease: "power2.inOut" }, "pull");
+            tl.to(armPull, { attr: { d: "M 205,175 Q 240,190 200,240 Q 190,250 200,150" }, duration: 2, ease: "power2.inOut" }, "pull");
+            tl.to(arrow, { y: 100, duration: 2, ease: "power2.inOut" }, "pull");
+
+            // 2. The Lightning Strike
+            tl.to(lightning, { opacity: 1, duration: 0.05, yoyo: true, repeat: 3 }, "pull+=1.5");
+            tl.add(() => {
+                // Subtle camera bump
+                gsap.to("body", { y: -5, duration: 0.05, yoyo: true, repeat: 3 });
+            }, "pull+=1.5");
+
+            // 3. Arrow Transforms into Mohini Astra (Magical Pink/Red)
+            tl.to(arrowShaft, { stroke: '#ff0055', strokeWidth: 4, duration: 0.2 }, "pull+=1.5");
+            tl.to(arrowTip, { fill: '#ff0055', duration: 0.2 }, "pull+=1.5");
+            tl.to(arrowFletch, { fill: '#ff0055', duration: 0.2 }, "pull+=1.5");
+            tl.add(() => arrow.classList.add('mohini-glow'), "pull+=1.5");
+            tl.to(archerAura, { attr: { fill: "rgba(255,0,85,0.2)" }, duration: 1 }, "pull+=1.5");
         }
 
-        function chargeLoop() {
-            if(!state.isCharging) return;
-            state.charge += 0.8; // Speed of charging
-            
-            if(state.charge >= 100) {
-                state.charge = 100;
-                executeStrike(); // BOOM!
-            }
-            
-            chargeBar.style.width = `${state.charge}%`;
-            updateArcherVisuals(state.charge);
-        }
-
-        function stopCharge(e) {
-            if (e) e.preventDefault();
-            if (state.phase !== 'interaction' || !state.isCharging) return;
-            
-            state.isCharging = false;
-            gsap.ticker.remove(chargeLoop);
-            clearInterval(state.mantraInterval);
-            
-            btn.style.transform = 'translateX(-50%) scale(1)';
-            btn.style.background = 'radial-gradient(circle, rgba(255,0,68,0.2) 0%, rgba(0,0,0,0) 70%)';
-            body.className = ''; // Stop shaking
-
-            // If not fully charged, Snap Back (Reset)
-            if(state.charge < 100) {
-                gsap.to(state, {
-                    charge: 0,
-                    duration: 0.5,
-                    ease: "elastic.out(1, 0.3)",
-                    onUpdate: () => {
-                        chargeBar.style.width = `${state.charge}%`;
-                        updateArcherVisuals(state.charge);
-                    },
-                    onComplete: () => {
-                        chargeContainer.style.opacity = 0;
-                        hint.innerHTML = "Focus requires patience. Hold until 100%.";
-                        hint.style.opacity = 1;
-                    }
-                });
-            }
-        }
-
-        // Event Listeners for Interaction
-        btn.addEventListener('mousedown', startCharge);
-        btn.addEventListener('touchstart', startCharge, {passive: false});
-        window.addEventListener('mouseup', stopCharge);
-        window.addEventListener('touchend', stopCharge);
-
-
-        // --- 2. THE STRIKE & SHATTER MECHANICS ---
-
-        function executeStrike() {
-            state.phase = 'strike';
-            state.isCharging = false;
-            gsap.ticker.remove(chargeLoop);
-            clearInterval(state.mantraInterval);
-            body.className = ''; // Stop CSS shake, we'll do GSAP shake
-
-            // Hide UI
-            gsap.to([btn, chargeContainer], {opacity: 0, duration: 0.2});
+        // --- PHASE 3: The Release & Shatter ---
+        function phase3Release() {
+            currentPhase = 3;
+            btn.style.display = 'none';
 
             const tl = gsap.timeline();
 
-            // 1. The Lightning Flash
-            tl.to(lightning, {opacity: 1, duration: 0.05, yoyo: true, repeat: 3});
+            // 1. Shoot Arrow
+            tl.to(arrow, { y: -1200, duration: 0.3, ease: "power4.in" }, "shoot");
+            tl.to('#arrow-trail', { opacity: 1, height: "150%", y: -1000, duration: 0.3, ease: "power4.in" }, "shoot");
             
-            // 2. The Shoot
-            tl.to(arrow, { y: -1500, duration: 0.2, ease: "power4.in" }, "shoot");
-            tl.to('#arrow-trail', { opacity: 1, height: "150%", y: -1000, duration: 0.2, ease: "power4.in" }, "shoot");
-            
-            // Bow Snap back violently
-            tl.to('#bow-string', { attr: { d: "M 22 118 Q 100 120 178 118" }, duration: 0.1, ease: "back.out(4)" }, "shoot");
-            tl.to('#arm-pull', { attr: { y2: 120 }, duration: 0.1, ease: "back.out(4)" }, "shoot");
-            tl.to('#bow-wood', { attr: { d: "M 20 120 Q 100 90 180 120" }, duration: 0.1, ease: "back.out(4)" }, "shoot");
+            // Snap bow back
+            tl.to(bowString, { attr: { d: "M 102,48 Q 200,50 298,48" }, duration: 0.1, ease: "back.out(4)" }, "shoot");
+            tl.to(bowWood, { attr: { d: "M 100,50 Q 220,-20 300,50" }, duration: 0.1, ease: "back.out(4)" }, "shoot");
 
-            // 3. The Impact (Camera Shake & Shatter)
+            // 2. Impact Shatter
             tl.add(() => {
-                // Violent Shake
-                gsap.to("body", { x:()=>(Math.random()-0.5)*40, y:()=>(Math.random()-0.5)*40, duration:0.02, yoyo:true, repeat:15, onComplete:()=>gsap.set("body",{x:0,y:0}) });
-                initShatterPhysics(); // Start Canvas Particles
-            }, "shoot+=0.2");
+                gsap.to("body", { y: 10, duration: 0.05, yoyo: true, repeat: 5 }); // Bump
+                initShatterPhysics(); 
+            }, "shoot+=0.3");
 
-            // 4. Fade out archer layer, show terminal
-            tl.to(layerInteraction, {opacity: 0, duration: 0.1}, "shoot+=0.25");
-            tl.set(layerInteraction, {display: 'none'});
+            // 3. Fade out archer, show terminal
+            tl.to(document.getElementById('layer-interaction'), { opacity: 0, duration: 0.2 }, "shoot+=0.35");
+            tl.set(document.getElementById('layer-interaction'), { display: 'none' });
             
-            // 5. Start Terminal Sequence
             tl.add(startTerminalSequence, "+=1");
         }
 
-        // --- Custom Particle Physics for Shatter (Canvas) ---
+        // --- Canvas Particle Physics (The Shatter) ---
         const canvas = document.getElementById('layer-shatter');
         const ctx = canvas.getContext('2d');
         let particles = [];
-        let animationFrameId;
 
         function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
         function initShatterPhysics() {
-            // Create glass shards
-            const colors = ['#ffffff', '#ff0044', '#ff4d79', '#111111'];
-            for(let i = 0; i < 300; i++) {
+            const colors = ['#ffffff', '#ff0055', '#ff4d88', '#222222'];
+            for(let i = 0; i < 200; i++) {
                 particles.push({
-                    x: canvas.width / 2,
-                    y: canvas.height * 0.1, // Impact at top
-                    vx: (Math.random() - 0.5) * 60, // Explosive horizontal force
-                    vy: Math.random() * 40 + 10,    // Explosive downward force
-                    size: Math.random() * 8 + 2,
+                    x: canvas.width / 2, y: canvas.height * 0.1,
+                    vx: (Math.random() - 0.5) * 50, vy: Math.random() * 30 + 5,
+                    size: Math.random() * 6 + 2,
                     color: colors[Math.floor(Math.random() * colors.length)],
-                    life: 1,
-                    decay: Math.random() * 0.015 + 0.005,
-                    rotation: Math.random() * 360,
-                    rotSpeed: (Math.random() - 0.5) * 30,
-                    shape: Math.random() > 0.5 ? 'triangle' : 'rect' // Sharp shards
+                    life: 1, decay: Math.random() * 0.015 + 0.005,
+                    rotation: Math.random() * 360, rotSpeed: (Math.random() - 0.5) * 20
                 });
             }
             animateShatter();
@@ -511,232 +390,64 @@
         function animateShatter() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             let isAlive = false;
-            
             particles.forEach(p => {
-                p.x += p.vx;
-                p.y += p.vy;
-                p.vy += 0.5; // Gravity
-                p.life -= p.decay;
-                p.rotation += p.rotSpeed;
-                
+                p.x += p.vx; p.y += p.vy; p.vy += 0.8; // Gravity
+                p.life -= p.decay; p.rotation += p.rotSpeed;
                 if (p.life > 0) {
                     isAlive = true;
-                    ctx.globalAlpha = p.life;
-                    ctx.fillStyle = p.color;
-                    ctx.save();
-                    ctx.translate(p.x, p.y);
-                    ctx.rotate(p.rotation * Math.PI / 180);
-                    
-                    if(p.shape === 'rect') {
-                        ctx.fillRect(-p.size, -p.size, p.size*2, p.size*2);
-                    } else {
-                        ctx.beginPath();
-                        ctx.moveTo(0, -p.size*2);
-                        ctx.lineTo(p.size, p.size);
-                        ctx.lineTo(-p.size, p.size);
-                        ctx.fill();
-                    }
+                    ctx.globalAlpha = p.life; ctx.fillStyle = p.color;
+                    ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rotation * Math.PI / 180);
+                    ctx.beginPath(); ctx.moveTo(0, -p.size*2); ctx.lineTo(p.size, p.size); ctx.lineTo(-p.size, p.size); ctx.fill();
                     ctx.restore();
                 }
             });
-
-            if (isAlive) {
-                animationFrameId = requestAnimationFrame(animateShatter);
-            } else {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                canvas.style.display = 'none'; // Cleanup
-            }
+            if (isAlive) requestAnimationFrame(animateShatter);
+            else canvas.style.display = 'none';
         }
 
-        // --- 3. THE HACKER TERMINAL SEQUENCE ---
+        // --- Terminal Sequence ---
         const fakeLogs = [
-            "Booting Quantum Kernel v9.4.1...",
-            "Loading multi-verse variables.......... [OK]",
-            "Bypassing emotional firewalls.......... [SUCCESS]",
-            "Decrypting AES-256 memory blocks....... [DONE]",
-            "Scanning timeline probabilities........",
-            "Warning: Anomaly detected in Sector 7G.",
-            "Filtering noise...",
-            "Isolating primary objective...",
-            "Searching for: 'The Only Constant'",
+            "Booting Quantum Kernel...",
+            "Decrypting emotional firewalls.......... [SUCCESS]",
+            "Filtering noise... Isolating core truth...",
             "Target Acquired: KHUSHBU."
         ];
 
         async function startTerminalSequence() {
-            state.phase = 'terminal';
-            layerTerminal.style.display = 'flex';
+            const layerTerm = document.getElementById('layer-terminal');
+            layerTerm.style.display = 'flex';
             const logsContainer = document.getElementById('term-logs');
             const finalMsg = document.getElementById('term-final-msg');
 
-            // Simulate fast hacking logs
             for(let i=0; i<fakeLogs.length; i++) {
                 const logEl = document.createElement('div');
                 logEl.innerText = `> ${fakeLogs[i]}`;
                 logsContainer.appendChild(logEl);
-                
-                // Auto scroll to bottom
-                logsContainer.scrollTop = logsContainer.scrollHeight;
-                
-                // Random delay for realism (50ms to 300ms)
-                await new Promise(r => setTimeout(r, Math.random() * 250 + 50));
+                await new Promise(r => setTimeout(r, Math.random() * 300 + 200));
             }
+            await new Promise(r => setTimeout(r, 600));
 
-            await new Promise(r => setTimeout(r, 800)); // Pause for effect
-
-            // Type the final message
-            const msg = "Initializing Phase 4...";
+            const msg = "Initializing The Reality...";
             for(let i=0; i<msg.length; i++) {
                 finalMsg.innerHTML += msg.charAt(i);
-                await new Promise(r => setTimeout(r, 60)); // typing speed
+                await new Promise(r => setTimeout(r, 50));
             }
-            finalMsg.classList.add('glitch-effect');
-            finalMsg.setAttribute('data-text', msg);
 
-            await new Promise(r => setTimeout(r, 1500)); // Wait before transition
+            await new Promise(r => setTimeout(r, 1200));
+            gsap.to(layerTerm, { opacity: 0, duration: 1, onComplete: () => {
+                layerTerm.style.display = 'none';
+                initFinalPages();
+            }});
+        }
+
+        // --- Final Phase: Snap Pages ---
+        function initFinalPages() {
+            const pagesLayer = document.getElementById('layer-pages');
+            pagesLayer.style.display = 'block';
             
-            // Fade to Final UI
-            gsap.to(layerTerminal, { opacity: 0, duration: 1, onComplete: initFinalPhase });
+            // Fade in pages smoothly
+            gsap.from(pagesLayer, { opacity: 0, duration: 1.5 });
         }
-
-
-        // --- 4. THE FINAL ROMANTIC UI & QUANTUM BACKGROUND ---
-        
-        function initFinalPhase() {
-            state.phase = 'final';
-            layerTerminal.style.display = 'none';
-            layerFinal.style.display = 'block';
-            
-            // Initialize Interactive Canvas Background
-            initQuantumBackground();
-
-            // GSAP Entrance Animations
-            gsap.from('.gsap-reveal', {
-                y: 50,
-                opacity: 0,
-                duration: 1.5,
-                stagger: 0.3,
-                ease: "power3.out",
-                delay: 0.5
-            });
-
-            // GSAP ScrollTrigger for Timeline Items
-            gsap.utils.toArray('.gsap-timeline-item').forEach((item, i) => {
-                gsap.from(item, {
-                    scrollTrigger: {
-                        trigger: item,
-                        start: "top 85%", // Trigger when top of element hits 85% of viewport
-                        toggleActions: "play none none reverse"
-                    },
-                    x: i % 2 === 0 ? -50 : 50, // Alternate coming from left/right
-                    opacity: 0,
-                    duration: 1.2,
-                    ease: "power2.out"
-                });
-            });
-        }
-
-        // Interactive Quantum Net Background (Reacts to Mouse/Touch)
-        function initQuantumBackground() {
-            const qCanvas = document.getElementById('quantum-bg');
-            const qCtx = qCanvas.getContext('2d');
-            let qWidth, qHeight;
-            let qParticles = [];
-            let mouse = { x: -1000, y: -1000 }; // offscreen default
-
-            function resize() {
-                qWidth = window.innerWidth;
-                qHeight = window.innerHeight;
-                qCanvas.width = qWidth;
-                qCanvas.height = qHeight;
-            }
-            window.addEventListener('resize', resize);
-            resize();
-
-            // Track mouse/touch inside the scrollable container
-            layerFinal.addEventListener('mousemove', e => {
-                mouse.x = e.clientX;
-                mouse.y = e.clientY; // Fix for scrolling: use clientY for viewport fixed canvas
-            });
-            layerFinal.addEventListener('touchmove', e => {
-                mouse.x = e.touches[0].clientX;
-                mouse.y = e.touches[0].clientY;
-            }, {passive: true});
-
-            // Create particles
-            const particleCount = window.innerWidth < 768 ? 40 : 80;
-            for(let i=0; i<particleCount; i++) {
-                qParticles.push({
-                    x: Math.random() * qWidth,
-                    y: Math.random() * qHeight,
-                    vx: (Math.random() - 0.5) * 0.5,
-                    vy: (Math.random() - 0.5) * 0.5,
-                    baseX: Math.random() * qWidth,
-                    baseY: Math.random() * qHeight
-                });
-            }
-
-            function animateQuantum() {
-                qCtx.clearRect(0, 0, qWidth, qHeight);
-                
-                // Draw Connections
-                qCtx.lineWidth = 0.5;
-                for(let i=0; i<qParticles.length; i++) {
-                    const p1 = qParticles[i];
-                    
-                    // Move
-                    p1.x += p1.vx;
-                    p1.y += p1.vy;
-                    
-                    // Bounce edges
-                    if(p1.x < 0 || p1.x > qWidth) p1.vx *= -1;
-                    if(p1.y < 0 || p1.y > qHeight) p1.vy *= -1;
-
-                    // Interact with Mouse (Quantum Entanglement)
-                    const dx = mouse.x - p1.x;
-                    const dy = mouse.y - p1.y;
-                    const distToMouse = Math.sqrt(dx*dx + dy*dy);
-                    
-                    if(distToMouse < 150) {
-                        // Repel slightly
-                        p1.x -= dx * 0.02;
-                        p1.y -= dy * 0.02;
-                        
-                        // Draw line to mouse (Red connection)
-                        qCtx.beginPath();
-                        qCtx.moveTo(p1.x, p1.y);
-                        qCtx.lineTo(mouse.x, mouse.y);
-                        qCtx.strokeStyle = `rgba(255, 0, 68, ${1 - distToMouse/150})`;
-                        qCtx.stroke();
-                    }
-
-                    // Draw lines between nearby particles
-                    for(let j=i+1; j<qParticles.length; j++) {
-                        const p2 = qParticles[j];
-                        const dx2 = p1.x - p2.x;
-                        const dy2 = p1.y - p2.y;
-                        const dist = Math.sqrt(dx2*dx2 + dy2*dy2);
-                        
-                        if(dist < 100) {
-                            qCtx.beginPath();
-                            qCtx.moveTo(p1.x, p1.y);
-                            qCtx.lineTo(p2.x, p2.y);
-                            qCtx.strokeStyle = `rgba(100, 100, 100, ${0.2 * (1 - dist/100)})`;
-                            qCtx.stroke();
-                        }
-                    }
-                    
-                    // Draw node
-                    qCtx.beginPath();
-                    qCtx.arc(p1.x, p1.y, 1.5, 0, Math.PI*2);
-                    qCtx.fillStyle = 'rgba(255,255,255,0.3)';
-                    qCtx.fill();
-                }
-
-                requestAnimationFrame(animateQuantum);
-            }
-            animateQuantum();
-        }
-
     </script>
 </body>
 </html>
